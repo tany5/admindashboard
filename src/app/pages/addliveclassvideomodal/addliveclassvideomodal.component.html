@@ -1,0 +1,140 @@
+
+<div *ngIf="progress > 0" class="progress form-group" style="position: fixed;
+width: 75%;
+margin-left: auto;
+margin-right: auto; z-index: 1000 !important;">
+      <div  class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">{{progress}}%
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <span style="cursor: pointer;" class="float-right close" style="color: #000; cursor: pointer;" (click)="closeDialog()"><mat-icon>clear</mat-icon> </span>
+      </div>
+    </div>
+    
+<h1 class="text-center" style="color: #000;" s>Add Video For Day {{dayId}} !!</h1><br><br>
+
+<section style="padding: 90px 0px;">
+<form method="post" [formGroup]="videoDetailsFormGroup" (ngSubmit)="submit()">
+    <ng-template matStepLabel>Fill out Video Details</ng-template>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <input type="hidden" [(ngModel)]="dayId" value="{{dayId}}"  formControlName="dayId">
+        <input type="hidden" [(ngModel)]="live_class_meta_id" value="{{live_class_meta_id}}" formControlName="live_class_meta_id">
+        <input type="hidden" [(ngModel)]="product_id" value="{{product_id}}" formControlName="product_id">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" 
+            formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Choose Time</mat-label>
+          <input matInput [ngxTimepicker]="pickerTime" formControlName="time">
+          <ngx-material-timepicker #pickerTime></ngx-material-timepicker>
+        </mat-form-field>
+
+      </div>
+
+
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Subject</mat-label>
+          <mat-select (selectionChange)="getChapter($event.value)" formControlName="subject">
+            <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+              {{subject.type_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select formControlName="chapter">
+            <mat-option *ngFor="let subject of chapterList" [value]="subject.chapter_id">
+              {{subject.chapter_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-12 col-md-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Video Title</mat-label>
+          <input matInput placeholder="Translation (B to E) - 2" required
+            formControlName="title">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Youtube Video url</mat-label>
+          <input matInput placeholder="Translation (B to E) - 2"  formControlName="url">
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Video Order</mat-label>
+          <input matInput type="number" placeholder="1,2,3" required formControlName="order">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <img *ngFor='let url of images' [src]="url" class="img-fluid"
+        style="max-height: 30vh; overflow-y: auto;">
+      </div>
+      <div class="col-12 col-md-12">   
+        <mat-label>Video Banner</mat-label>
+        <div class="form-group">
+          <input formControlName="file" id="file" type="file" class="btn btn-block btn-danger"
+            (change)="onVideoChange($event)">
+        </div>
+      </div>
+    </div>
+
+
+   
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <img [src]="url2" *ngIf="format==='image' && url2" > <br/>
+        <video [src]="url2" *ngIf="format==='video' && url2" controls></video> <br/>
+        <mat-label>Video File</mat-label>
+        <div class="form-group">
+          <input formControlName="video" id="file" type="file" class="btn btn-block btn-warning"
+          (change)="onVideoFileChange($event)">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <div style="max-height: 30vh; overflow-y: auto;">
+          <pdf-viewer [src]="src"
+          [original-size]="false"></pdf-viewer>
+        </div>
+       
+        <mat-label>Pdf</mat-label>
+        <div class="form-group">
+          <input formControlName="pdf" id="file" type="file" class="btn btn-block btn-success"
+            multiple="" (change)="onpdfFileChange($event)">
+        </div>
+
+      </div>
+    </div>
+    <button type="submit" mat-raised-button color="primary">Add Video</button>
+    
+  </form>
+  </section>

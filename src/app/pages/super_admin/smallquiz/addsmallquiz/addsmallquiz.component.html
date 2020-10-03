@@ -1,0 +1,256 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Small Quiz
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="video-course-section">
+  <div class="container-fluid">
+
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="addSmallQuiz">
+        <form [formGroup]="addSmallQuiz" (ngSubmit)="submitSmallQuizData()">
+          <ng-template matStepLabel>Add Small Quiz Data</ng-template>         
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline" required>
+                <mat-label>Select Exam Type</mat-label>
+                <mat-select #examtype required formControlName="examType" (selectionChange)="onExamTypeChange(examtype.value)">
+                  <mat-option>None</mat-option>
+                  <mat-option value="1">Exam Based</mat-option>
+                  <mat-option value="2">Chapter Based</mat-option>
+                  <mat-option value="3">Mixed Quiz</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Quiz Section</mat-label>
+                <mat-select [disabled]="disableSelect.value" required #parentCategory (selectionChange)="onParentCategoryChnage(parentCategory.value)"
+                  formControlName="parentCategory">
+                  <mat-option [value]="questionType.type_id" *ngFor="let questionType of smallQuizQuestionTypeLists">
+                    {{questionType.type_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Quiz Chapter</mat-label>
+                <mat-select [disabled]="disableSelect.value" required formControlName="childCategory">
+                  <mat-option [value]="smallquizType.small_chapter_id"
+                    *ngFor="let smallquizType of smallQuizChapterLists">
+                    {{smallquizType.chapter_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Course</mat-label>
+                <mat-select [disabled]="courseSelect.value" required formControlName="course">
+                  <mat-option [value]="corse.sub_category_id" *ngFor="let corse of corsesLists">
+                    {{corse.sub_category_name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline" required>
+                <mat-label>Quiz Name</mat-label>
+                <input matInput placeholder="Ex. Bank, SSC" formControlName="quizName">
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field appearance="outline" required>
+                <mat-label>Total Question</mat-label>
+                <input type="number" matInput placeholder="Ex.10, 20" formControlName="totalQuestion">
+              </mat-form-field>
+            </div>
+          </div>
+          <!--row-->
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 mx-auto">
+              <button type="submit" mat-raised-button class="btn-success btn-block">Add Quiz</button>
+            </div>
+          </div>
+        </form>
+
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <mat-form-field>
+              <mat-label>Search</mat-label>
+              <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+          </div>
+        </div>    
+        <div class="row">
+          <div class="col-12">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+    
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SR NO </th>
+                  <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+                </ng-container>
+    
+               
+    
+                <!-- Name Column -->
+                <ng-container matColumnDef="quizname">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Quiz Name </th>
+                  <td mat-cell *matCellDef="let row"> {{row.quiz_name}} </td>
+                </ng-container>
+
+                 <!-- Progress Column -->
+                 <ng-container matColumnDef="typename">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type Name </th>
+                  <td mat-cell *matCellDef="let row"> {{row.type_name}} </td>
+                </ng-container>
+
+                 <!-- Progress Column -->
+                 <ng-container matColumnDef="chaptername">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type Name </th>
+                  <td mat-cell *matCellDef="let row"> {{row.chapter_name}} </td>
+                </ng-container>
+    
+                <!-- Color Column -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                  <td mat-cell *matCellDef="let row" [style.color]="row.color"> 
+                    <button mat-raised-button color="primary" (click)="editDailyQuiz(row.quiz_id)"><mat-icon>edit</mat-icon></button>
+                    <button mat-raised-button color="warn" (click)="deleteSmallQuiz(row.quiz_id, row.quiz_name)"><mat-icon>clear</mat-icon></button>
+    
+                  </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+    
+              <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </mat-step>
+
+      <mat-step [stepControl]="addSmallQuizQuestion">
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>Total Question: {{totalQuestion}}</h1>
+          </div>
+
+          <div class="col-sm-6">
+            <h1>Remain Question: {{addedQuestion}}</h1>
+          </div>
+        </div>
+        <form [formGroup]="addSmallQuizQuestion" (ngSubmit)="submitSmallQuizQuestionAnswer()">
+          <ng-template matStepLabel>Add Small Quiz Question Answers</ng-template>
+          <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+
+            <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+
+              <div [formGroupName]="i">
+                <div class="row">
+                  <div class="col-12">
+                    <h1 *ngIf="i == 0">Question</h1>
+                    <angular-editor *ngIf="i == 0" formControlName="question_statement" [config]="editorConfig"
+                      required>
+                    </angular-editor>
+
+                    <input type="text" *ngIf="i == 0" formControlName="small_quiz_id" [(ngModel)]="small_quiz_id">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <h1 class="text-center">Answer Options {{i+1}}</h1>
+                  </div>
+                  <div class="col-2 col-md-1">
+
+                    <div class="control-group">
+                      <label class="text-center">Option</label>
+                      <div class="controls">
+                        <div class="option_box">
+                          <span>{{i+1}}</span>
+                          <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
+                            name="status" formControlName="status"  [value]="selValue" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-10">
+                    <angular-editor formControlName="answer" [config]="editorConfig" required></angular-editor>
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-12">
+                    <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description</h1>
+                    <angular-editor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
+                      [config]="editorConfig" required></angular-editor>
+                  </div>
+                </div>
+              </div>
+
+            </ng-container>
+          </section>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 mx-auto">
+              <button type="submit" mat-raised-button class="btn-success btn-block">Add Quiz Question & Answers</button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div class="vertical-center">
+          <div class="container">
+            <div class="row">
+              <img src="assets/images/dont.png" class="mx-auto img-fluid">
+              <div class="col-12 text-center">
+                <p class="text-center">You are now done.</p>
+                <a mat-raised-button color="primary" class="mx-auto" (click)="goBack()">Go Back</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+
+
+
+  </div>
+</section>

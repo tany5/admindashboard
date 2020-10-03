@@ -1,0 +1,160 @@
+<div class="main-menu-header" style="padding: 10px 0 17px;
+background-image: url(assets/images/user-bg.jpg);
+background-size: cover;
+text-align: center;
+position: relative;">
+
+  <img class="img-80 img-radius mCS_img_loaded" src="assets/images/avatar-2.jpg" alt="User-Profile-Image">
+  <div class="user-details">
+    <button mat-raised-button class="user_btn" [matMenuTriggerFor]="menu">
+      Tanmay Dey
+      <mat-icon>expand_more</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+
+      <button mat-menu-item>
+        <mat-icon>account_circle</mat-icon>
+        Profile
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        Sign out
+      </button>
+
+    </mat-menu>
+  </div>
+
+
+</div>
+
+<mat-nav-list>
+  <a mat-list-item [routerLink]="['/superadmin/dashboard']" matTooltip="Dashboard" matTooltipPosition="after"
+    routerLinkActive="active-list-item">
+    <mat-icon>dashboard</mat-icon> Dashboard
+  </a>
+
+
+
+  <a matTooltip="Dashboard" matTooltipPosition="after" routerLinkActive="active-list-item" mat-list-item
+    (click)="showSubmenu = !showSubmenu" class="parent">
+    <span class="full-width" *ngIf="isExpanded || isShowing">Live Class</span>
+    <mat-icon mat-list-icon>note_add</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more
+    </mat-icon>
+  </a>
+  <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
+    <a [routerLink]="['/superadmin/addcourse']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Live Class
+    </a>
+
+    <a [routerLink]="['/superadmin/editliveliveclass']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Edit Live Class
+    </a>
+    <a matTooltip="Dashboard" matTooltipPosition="after" [routerLink]="['/superadmin/addliveclassvideo']"
+      routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>add_to_queue</mat-icon> Add live class Video
+    </a>
+  </div>
+
+
+
+
+  <a matTooltip="Dashboard" matTooltipPosition="after" routerLinkActive="active-list-item" mat-list-item
+    (click)="showSubmenu1 = !showSubmenu1" class="parent">
+    <span class="full-width" *ngIf="isExpanded || isShowing">Video Courses</span>
+    <mat-icon mat-list-icon>note_add</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu1}" *ngIf="isExpanded || isShowing">expand_more
+    </mat-icon>
+  </a>
+  <div class="submenu" [ngClass]="{'expanded' : showSubmenu1}" *ngIf="isShowing || isExpanded">
+    <a [routerLink]="['/superadmin/addvideocourse']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Video Courses
+    </a>
+  </div>
+
+
+
+
+  <a matTooltip="Dashboard" matTooltipPosition="after" routerLinkActive="active-list-item" mat-list-item
+    (click)="showSubmenu2 = !showSubmenu2" class="parent">
+    <span class="full-width" *ngIf="isExpanded || isShowing">Small Quiz</span>
+    <mat-icon mat-list-icon>note_add</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu2}" *ngIf="isExpanded || isShowing">expand_more
+    </mat-icon>
+  </a>
+  <div class="submenu" [ngClass]="{'expanded' : showSubmenu2}" *ngIf="isShowing || isExpanded">
+    <a [routerLink]="['/superadmin/smallquiz']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>view Small Quiz
+    </a>
+
+    <a [routerLink]="['/superadmin/small_cat']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Small Quiz Category
+    </a>
+
+    <a [routerLink]="['/superadmin/small_sub_cat']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Sub Category
+    </a>
+
+    <a [routerLink]="['/superadmin/add_small_quiz_chapter']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Chapter
+    </a>
+
+    <a [routerLink]="['/superadmin/add_daily_quiz']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Daily Quiz
+    </a>
+
+    <a [routerLink]="['/superadmin/add_small_quiz']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Small Quiz
+    </a>
+  </div>
+
+
+  <a matTooltip="Dashboard" matTooltipPosition="after" routerLinkActive="active-list-item" mat-list-item
+    (click)="showSubmenu3 = !showSubmenu3" class="parent">
+    <span class="full-width" *ngIf="isExpanded || isShowing">Test Manager</span>
+    <mat-icon mat-list-icon>note_add</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu3}" *ngIf="isExpanded || isShowing">expand_more
+    </mat-icon>
+  </a>
+  <div class="submenu" [ngClass]="{'expanded' : showSubmenu3}" *ngIf="isShowing || isExpanded">
+    <a [routerLink]="['/superadmin/fulllengthtest']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Full Length Test
+    </a>
+
+    <a [routerLink]="['/superadmin/sectionaltest']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Sectional Test
+    </a>
+
+    <a [routerLink]="['/superadmin/previousyeartest']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Previous Year Test
+    </a>
+  </div>
+
+
+
+
+  <a matTooltip="Dashboard" matTooltipPosition="after" routerLinkActive="active-list-item" mat-list-item
+    (click)="showSubmenu4 = !showSubmenu4" class="parent">
+    <span class="full-width" *ngIf="isExpanded || isShowing">Courses</span>
+    <mat-icon mat-list-icon>note_add</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu4}" *ngIf="isExpanded || isShowing">expand_more
+    </mat-icon>
+  </a>
+  <div class="submenu" [ngClass]="{'expanded' : showSubmenu4}" *ngIf="isShowing || isExpanded">
+    <a [routerLink]="['/superadmin/addcoursemaincourse']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Course
+    </a>
+
+    <a [routerLink]="['/superadmin/addparentcategory']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Add Parent Category
+    </a>
+
+    <a [routerLink]="['/superadmin/previousyeartest']" routerLinkActive="active-list-item" mat-list-item>
+      <mat-icon>playlist_add</mat-icon>Previous Year Test
+    </a>
+  </div>
+
+
+</mat-nav-list>

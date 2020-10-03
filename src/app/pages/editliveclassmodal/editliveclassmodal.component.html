@@ -1,0 +1,154 @@
+<section style="padding: 90px 0px;">
+ <ng-container *ngIf="showDetails">
+   
+   <div class="row">
+     <div class="col-12">
+      <h1 class="text-center" style="color: #000;">Update Video For {{videoDetails[0].day_id}}
+        ({{videoDetails[0].vdo_date}})</h1>
+       <span style="cursor: pointer;" class="float-right close" style="color: #000; cursor: pointer;"
+         (click)="closeDialog()">
+         <mat-icon>clear</mat-icon>
+       </span>
+     </div>
+   </div>
+
+
+
+   <form method="post" [formGroup]="videoDetailsFormGroup" (ngSubmit)="submit()">
+     <ng-template matStepLabel>Fill out Video Details</ng-template>
+     <div class="row">
+       <input type="hidden" [(ngModel)]="videoDetails[0].video_id" formControlName="video_id"> 
+       <div class="col-12 col-md-6">        
+         <mat-form-field class="example-full-width" appearance="fill">
+           <mat-label>Choose a date</mat-label>
+           <input matInput [matDatepicker]="picker" formControlName="date" [(ngModel)]="date">
+           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+           <mat-datepicker touchUi #picker></mat-datepicker>
+         </mat-form-field>
+       </div>
+       <div class="col-12 col-md-6">
+         <mat-form-field class="example-full-width" appearance="fill">
+           <mat-label>Choose Time</mat-label>
+           <input matInput [ngxTimepicker]="pickerTime" formControlName="time" [ngModel]=" time">
+           <ngx-material-timepicker #pickerTime></ngx-material-timepicker>
+         </mat-form-field>
+
+       </div>
+
+
+     </div>
+
+     <div class="row">
+       <div class="col-12 col-md-6">
+         <mat-form-field appearance="fill">
+           <mat-label>Select Subject</mat-label>
+           <mat-select (selectionChange)="getChapter($event.value)" formControlName="subject" [(ngModel)]="subject">
+             <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+               {{subject.type_name}}
+             </mat-option>
+           </mat-select>
+         </mat-form-field>
+       </div>
+       <div class="col-12 col-md-6">
+         <mat-form-field appearance="fill">
+           <mat-label>Select Chapter</mat-label>
+           <mat-select formControlName="chapter" [(ngModel)]="chapter">
+             <mat-option *ngFor="let subject of chapterList" [value]="subject.chapter_id">
+               {{subject.chapter_name}}
+             </mat-option>
+           </mat-select>
+         </mat-form-field>
+       </div>
+     </div>
+
+     <div class="row">
+
+       <div class="col-12 col-md-4">
+         <mat-form-field class="example-full-width" appearance="fill">
+           <mat-label>Video Title</mat-label>
+           <input matInput placeholder="Translation (B to E) - 2" required formControlName="title" [(ngModel)]="title">
+         </mat-form-field>
+       </div>
+       <div class="col-12 col-md-4">
+         <mat-form-field class="example-full-width" appearance="fill" >
+           <mat-label>Youtube Video url</mat-label>
+           <input matInput placeholder="Translation (B to E) - 2" formControlName="url" [(ngModel)]="url">
+         </mat-form-field>
+       </div>
+
+       <div class="col-12 col-md-4">
+         <mat-form-field class="example-full-width" appearance="fill" >
+           <mat-label>Video Order</mat-label>
+           <input matInput type="number" placeholder="1,2,3" required formControlName="order" [(ngModel)]="order">
+         </mat-form-field>
+       </div>
+     </div>
+
+     <div class="row">
+      <mat-label>Video Banner</mat-label>
+       <div class="col-12 col-md-12">
+         <img *ngFor='let url of images' [src]="url" class="img-fluid" style="max-height: 30vh; overflow-y: auto;">
+       </div>
+       <div class="col-12 col-md-12">
+         
+         <div class="form-group">
+           <input formControlName="file" id="file" type="file" class="btn btn-block btn-danger"
+             (change)="onVideoChange($event)">
+             <input type="hidden" formControlName="banner_chnage" [(ngModel)]="bannerChange"> 
+         </div>
+       </div>
+     </div>
+
+
+
+     <div class="row">
+      <mat-label>Video File</mat-label>
+      
+      
+       <div class="col-12 col-md-12">
+         <ng-container *ngIf="videoChnage == 0">
+          <video  [src]="url2" *ngIf="url2" controls ></video>
+         </ng-container>
+        
+         <img [src]="url2" *ngIf="format==='image' && url2"> <br />
+         <video [src]="url2" *ngIf="format==='video' && url2" controls></video> <br />
+        
+         <div class="form-group">
+           <input formControlName="video" id="file" type="file" class="btn btn-block btn-warning"
+             (change)="onVideoFileChange($event)">
+           
+           <input type="hidden" formControlName="video_chnage" [(ngModel)]="videoChnage"> 
+         </div>
+
+       </div>
+     </div>
+
+     <div class="row">
+      <mat-label>Pdf</mat-label>
+       <div class="col-12 col-md-12">
+         <div style="max-height: 30vh; overflow-y: auto;">
+           <pdf-viewer [src]="src" [original-size]="false" *ngIf="src"> </pdf-viewer>
+         </div>
+
+         
+         <div class="form-group">
+           <input formControlName="pdf" id="file" type="file" class="btn btn-block btn-success" multiple=""
+             (change)="onpdfFileChange($event)">
+
+             <input type="hidden" formControlName="pdf_chnage" [(ngModel)]="pdfChnage"> 
+         </div>
+
+       </div>
+     </div>
+
+     <div class="row" style="margin-top: 30px;">
+      <div class="col-8 col-md-4">
+        <button type="submit" mat-raised-button color="primary" class="btn btn-block">Update  Video</button>
+      </div>
+     </div>
+     
+
+   </form>
+
+ </ng-container>
+ </section>

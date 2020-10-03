@@ -1,0 +1,48 @@
+<mat-toolbar>
+    <span class="example-spacer"></span>
+    <button mat-raised-button class="user_btn" [matMenuTriggerFor]="menu2">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+    <mat-menu #menu2="matMenu" xPosition="before" class="notifications-dropdown">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h6>Notificatios</h6>
+                </div>
+                <div class="col-6">
+                    <label class="float-right new">New</label>
+                </div>
+            </div>
+            <div class="row notifications-list">
+                <div class="col-3">
+                    <img src="assets/images/avatar-2.jpg" class="dropdown-img img-fluid">
+                </div>
+                <div class="col-9">
+                    <h5 class="notification-user">Tanmay Dey</h5>
+                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                    <span class="notification-time"> 30 minutes ago</span>
+                </div>
+            </div>
+        </div>
+    </mat-menu>
+
+    <button mat-raised-button class="user_btn" [matMenuTriggerFor]="menu">
+    Tanmay Dey
+    <mat-icon>expand_more</mat-icon>
+  </button>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+
+        <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      Profile
+    </button>
+
+        <button mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon>
+      Sign out
+    </button>
+
+    </mat-menu>
+</mat-toolbar>

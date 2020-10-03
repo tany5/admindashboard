@@ -1,0 +1,107 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / View Add Small Quiz
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="video-course-section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">ADD NEW CHAPTER</h1>
+        </div>
+      </div>
+      <form (ngSubmit)="submitchapter()" [formGroup]="quizChapter">
+        <div class="row">
+          <ng-container *ngIf="!showSubCategory">
+              <input type="hidden" formControlName="small_chapter_id" [(ngModel)]="prodId">
+            <div class="col-12 col-md-6 col-lg-6 mx-auto">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Parent Category</mat-label>
+                <mat-select #parentCategory formControlName="parentCategory" (selectionChange)="onParentCategoryChnage(parentCategory.value)" [(ngModel)]="small_quiz_type_id">
+                  <mat-option *ngFor="let parentCategory of parentCategoryLists" [value]="parentCategory.type_id">
+                    {{parentCategory.type_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="showSubCategory">
+            <div class="col-12 col-md-4 col-lg-4 mx-auto">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Parent Category</mat-label>
+                <mat-select #parentCategory  formControlName="parentCategory" (selectionChange)="onParentCategoryChnage(parentCategory.value)" [(ngModel)]="small_quiz_type_id">
+                  <mat-option *ngFor="let parentCategory of parentCategoryLists" [value]="parentCategory.type_id" >
+                    {{parentCategory.type_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="showSubCategory">
+            <div class="col-12 col-md-4 col-lg-4 mx-auto">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Child Category</mat-label>
+                <mat-select formControlName="childCategory" [(ngModel)]="small_quiz_child_type_id">
+                  <mat-option *ngFor="let childCategory of subCategory" [value]="childCategory.type_id">
+                    {{childCategory.type_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="showSubCategory">
+            <div class="col-12 col-md-4 col-lg-4 mx-auto">
+              <mat-form-field appearance="outline">
+                <mat-label>Small Quiz Category</mat-label>
+                <input matInput placeholder="General Studies" formControlName="catname" [(ngModel)]="chapter_name">
+              </mat-form-field>
+            </div>
+          </ng-container>
+  
+          <ng-container *ngIf="!showSubCategory">
+            <div class="col-12 col-md-6 col-lg-6 mx-auto">
+              <mat-form-field appearance="outline">
+                <mat-label>Small Quiz Category</mat-label>
+                <input matInput placeholder="General Studies" formControlName="catname"  [(ngModel)]="chapter_name">
+              </mat-form-field>
+            </div>
+          </ng-container>
+  
+        </div>
+        <div class="row" *ngIf="showSubCategory">
+          <div class="col-12 col-md-6 col-lg-5 mx-auto">
+            <button type="submit" mat-raised-button color="primary" class="btn-block"
+              >Update Chapter
+              Name</button>
+          </div>
+        </div>
+  
+        <div class="row" *ngIf="!showSubCategory">
+          <div class="col-12 col-md-6 col-lg-5 mx-auto">
+            <button type="submit" mat-raised-button color="primary" class="btn-block"
+              >Update Chapter Name</button>
+          </div>
+        </div>
+      </form>
+    </div>
+   </section> 

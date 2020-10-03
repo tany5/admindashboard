@@ -1,0 +1,29 @@
+<mat-toolbar class="main header">
+    <img src="assets/images/avision_logo.png">
+    <mat-icon class="close" *ngIf="drawer.opened" (click)="drawer.close()">clear</mat-icon>
+    <mat-icon *ngIf="!drawer.opened" (click)="drawer.toggle()">
+        menu
+    </mat-icon>
+    <app-header></app-header>
+</mat-toolbar>
+
+<mat-drawer-container [class.drawer-opened]="drawer.opened" class="example-container">
+    <mat-drawer #drawer class="drawer" mode="side" opened="true">
+        <div class="contents">
+            <app-sidebar></app-sidebar>
+        </div>
+    </mat-drawer>
+
+
+
+    <div class="main contents">
+
+        <router-outlet></router-outlet>
+        <div style="height: 1000px">&nbsp;</div>
+    </div>
+
+
+    <mat-toolbar class="main footer">
+        <app-footer></app-footer>
+    </mat-toolbar>
+</mat-drawer-container>

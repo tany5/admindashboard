@@ -1,0 +1,157 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: #fff;
+    outline: none;
+    outline: none;
+    outline: 0 !important;
+    color: #000
+}
+
+:focus {
+    outline: 0 !important;
+}
+
+.justify-content-center {
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+:host h6 {
+    font-size: 14px;
+}
+
+:host h5 {
+    font-size: 1.25rem;
+}
+
+.page-header:before {
+    background: rgba(55, 71, 79, 0.5);
+}
+
+.page-header:before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.page-header .page-block {
+    padding: 35px 40px;
+}
+
+.align-items-center {
+    -webkit-box-align: center!important;
+    -ms-flex-align: center!important;
+    align-items: center!important;
+}
+
+.page-wrapper {
+    padding: 1.8rem;
+    -webkit-transition: all ease-in 0.3s;
+    transition: all ease-in 0.3s;
+}
+
+mat-card {
+    padding: 20px 20px 100px 20px;
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+    box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+    //box-shadow: none !important;
+}
+
+mat-form-field,
+form {
+    width: 100%;
+}
+
+.mat-radio-button~.mat-radio-button {
+    margin-left: 16px;
+}
+
+
+
+  .vertical-center{
+    min-height: 100%;
+    min-height: 40vh;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.video-course-section {
+    padding: 60px 0px;
+}
+
+
+table {
+    width: 100%;
+    border-spacing: 0 8px !important;
+  }
+  
+  td.mat-cell {
+   padding: 16px 10px 16px 10px; 
+  }
+
+  th.mat-header-cell {
+    padding: 16px 10px 16px 10px;
+   }
+
+   /* Structure */
+.example-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 300vh;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+  
+  

@@ -1,0 +1,96 @@
+<div class="progress" *ngIf="progress > 0" id="progress">
+  <div class="progress-bar bg-success" role="progressbar" [style.width]="progress + '%'" aria-valuemin="0"
+    aria-valuemax="100">{{progress}}%</div>
+</div>
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="totalQuestion">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Daily Quiz
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="video-course-section">
+  <div class="container-fluid" *ngIf="showArray">
+    <form [formGroup]="addDailyQuizQuestion" (ngSubmit)="submitDailyQuizQuestionAnswer()">
+      <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+
+        <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-12">
+                <h1 *ngIf="i == 0">Question</h1>
+                <angular-editor *ngIf="i == 0" formControlName="question_statement" [config]="editorConfig" required>
+                </angular-editor>
+
+                <input type="hidden" *ngIf="i == 0" formControlName="daily_quizId">
+                <input type="hidden" *ngIf="i == 0" formControlName="daily_questionId">
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <h1 class="text-center">Answer Options {{i+1}}</h1>
+              </div>
+              <div class="col-2 col-md-1">
+
+                <div class="control-group">
+                  <label class="text-center">Option</label>
+                  <div class="controls">
+                    <div class="option_box">
+                      <span>{{i+1}}</span>
+                      <input type="hidden"formControlName="status" #status />
+
+                      <input type="hidden" [value]="status.value" />
+
+                      <ng-container *ngIf="status.value == '1'">                        
+                        <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
+                          name="status" formControlName="status" [value]="status.value" checked="checked" />
+                      </ng-container>
+
+                      <ng-container *ngIf="status.value == '0'">
+                        <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
+                          name="status" formControlName="status" [value]="selValue" />
+                      </ng-container>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-10">
+                <angular-editor formControlName="answer" [config]="editorConfig" required></angular-editor>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-12">
+                <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description</h1>
+                <angular-editor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
+                  [config]="editorConfig" required></angular-editor>
+              </div>
+            </div>
+          </div>
+
+        </ng-container>
+      </section>
+      <button type="submit" mat-raised-button color="primary">Update Question and Answer</button>
+    </form>
+  </div>
+</section>

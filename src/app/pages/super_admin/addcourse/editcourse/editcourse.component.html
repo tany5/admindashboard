@@ -1,0 +1,74 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="overlay"  *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">       
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+
+<section class="video-course-section">
+  <div class="container" *ngIf="showData">
+    <mat-card>
+      <form [formGroup]="course" (ngSubmit)="submitCourseDetails()">
+        <div class="row">
+          <div class="col-12">
+            <h1>ADD COURSES</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Add Course Name</mat-label>
+              <input matInput placeholder="Course Name..." formControlName="course_name" [(ngModel)]="courseName">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Add Course Description</mat-label>
+              <textarea matInput rows="5" formControlName="course_desc" [(ngModel)]="courseDesc  "></textarea>
+            </mat-form-field>
+            <input type="hidden" formControlName="course_id" [(ngModel)]="prodId">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-10 col-md-6">
+            <img [src]="src" class="img-fluid" />
+            <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+              accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="course_img" />
+          </div>
+        </div>
+
+        <div class="row pt-5">
+          <div class="col-10 col-md-6 mx-auto pt-5">
+            <button type="submit" mat-raised-button class="btn-success btn-block btn-lg">Edit Course Details</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+  </section>

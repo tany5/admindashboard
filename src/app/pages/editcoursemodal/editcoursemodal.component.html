@@ -1,0 +1,196 @@
+<div class="row">
+    <div class="col-12">
+        <h1> Add Live Class </h1>
+      <span style="cursor: pointer;" class="float-right close" style="color: #000; cursor: pointer;" (click)="closeDialog()"><mat-icon>clear</mat-icon> </span>
+    </div>
+  </div>
+
+
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="addLiveClassFormGroup">
+        <form method="post" (ngSubmit)="submitLiveCLassDetails()" [formGroup]="addLiveClassFormGroup" enctype="multipart/form-data">
+            <ng-template matStepLabel>ADD LIVE CLASSES</ng-template>
+            <input type="hidden" formControlName="live_class_meta_id" [(ngModel)]="live_class_meta_id">
+            <input type="hidden" formControlName="product_id" [(ngModel)]="product_id">
+
+            
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Live Class Title</mat-label>
+                        <input matInput placeholder="SBI PO" formControlName="courseName" required [(ngModel)]="courseName">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Actual Price</mat-label>
+                        <input type="number" matInput placeholder="5000" formControlName="actualPrice" required [(ngModel)]="actualPrice">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Offer Price</mat-label>
+                        <input type="number" matInput placeholder="4000" formControlName="offerPrice" required [(ngModel)]="offerPrice">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-label>Product Feature</mat-label>
+                    <angular-editor formControlName="productFeature" [config]="editorConfig" required [(ngModel)]="productFeature"></angular-editor>
+
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-label>Product Description</mat-label>
+                    <angular-editor formControlName="productDesc" [config]="editorConfig" required [(ngModel)]="productDesc"></angular-editor>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 30px;">
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>From date</mat-label>
+                        <input matInput [matDatepicker]="fromDate" formControlName="fromDate" required [(ngModel)]="fromDate1">
+                        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #fromDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>To date</mat-label>
+                        <input matInput [matDatepicker]="toDate" formControlName="toDate" required [(ngModel)]="toDate1">
+                        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #toDate></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+
+
+            </div>
+            <!--row-->
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Live Class</mat-label>
+                        <input type="number" matInput placeholder="4000" formControlName="liveClass" required [(ngModel)]="liveClass">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mock Tests</mat-label>
+                        <input type="number" matInput placeholder="4000" formControlName="mockTests" required [(ngModel)]="mockTests">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>PDF Notes</mat-label>
+                        <input type="number" matInput placeholder="4000" formControlName="pdfNotes" required [(ngModel)]="pdfNotes">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Practice Question</mat-label>
+                        <input type="number" matInput placeholder="4000" formControlName="practiceQuestion" required [(ngModel)]="practiceQuestion">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--row-->
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Demo Video Link</mat-label>
+                        <input matInput formControlName="product_demo_vdo" required [(ngModel)]="product_demo_vdo">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-3">
+                    <mat-label>Select Language</mat-label>
+                    <br><br>
+                    <mat-radio-group aria-label="Select an option" formControlName="language" [(ngModel)]="language">
+                        <mat-radio-button value="English">English</mat-radio-button>
+                        <mat-radio-button value="Hindi">Hindi</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+            <!--row-->
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select Course</mat-label>
+                        <mat-select formControlName="courses"  required [(ngModel)]="courses">
+                            <mat-option *ngFor="let course of courseLists" [value]="course.courses_id">{{course.courses_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                   <input type="hidden" formControlName="banner_change" [(ngModel)]="bannerChange">
+                    <img [src]="url2" style="margin: 20px 0px 0px 0px; width: 100%;" />
+                    <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)" formControlName="product_img" accept=".png, .jpg, .jpeg" value="Add Product Image" />
+                </div>
+            </div>
+
+            <!--row-->
+            <div class="row">
+                <button type="submit" mat-raised-button matStepperNext color="primary">
+                    <mat-icon>save</mat-icon> Save And Next
+                </button>
+
+            </div>
+            <!--row-->
+
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" (ngSubmit)="submitTeacher(getTeacher_id.value)">
+            <ng-template matStepLabel>Fill out Teacher Details</ng-template>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Teacher</mat-label>
+                <mat-select [formControl]="teacher_id" multiple #getTeacher_id [(ngModel)]="asignTeacherList">
+
+                    <mat-option *ngFor="let teacher of teacherList" [value]="teacher.teacher_id">{{teacher.teacher_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+
+
+                <button type="submit" mat-raised-button matStepperNext color="primary">
+                    <mat-icon>save</mat-icon> Save And Next
+                </button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+
+        <mat-card>
+            <div class="vertical-center">
+              <div class="container">
+                <div class="row"><img class="mx-auto img-fluid" src="assets/images/empty-page.png">
+                  <div class="col-12 text-center">
+                    <h4>Successfully Updated</h4>
+                    
+                    <button mat-raised-button color="warn" class="mx-auto" (click)="closeDialog()">Close </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

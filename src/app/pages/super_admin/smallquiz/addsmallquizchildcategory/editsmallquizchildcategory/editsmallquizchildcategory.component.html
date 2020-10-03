@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-12">
+      <h1 class="text-center"> EDIT SUB CATEGORY </h1>
+    <span style="cursor: pointer;" class="float-right close" style="color: #000; cursor: pointer;" (click)="closeDialog()"><mat-icon>clear</mat-icon> </span>
+  </div>
+</div>
+
+<div class="container-fluid">   
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6 mx-auto">
+        <mat-form-field appearance="outline" *ngIf="showparentCategoryLists">
+          <mat-label>Select Parent Category</mat-label>
+          <mat-select #parentCategory [(ngModel)]="parent_type_id">
+            <mat-option *ngFor="let parentCategory of parentCategoryLists" [value]="parentCategory.type_id">
+              {{parentCategory.type_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> 
+      
+      <div class="col-12 col-md-6 col-lg-6 mx-auto">
+        <mat-form-field appearance="outline">
+            <mat-label>Small Quiz Category</mat-label>
+            <input matInput placeholder="General Studies"  #catname [(ngModel)]="chapterName">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-5 mx-auto">
+            <button mat-raised-button color="primary" class="btn-block" (click)="submitcatname(chapterName, parent_type_id)">Update Category Name</button>
+        </div>
+    </div>
+  </div>

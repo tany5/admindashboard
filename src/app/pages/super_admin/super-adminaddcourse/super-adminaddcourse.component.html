@@ -1,0 +1,242 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Live Class
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div *ngIf="progress > 0" class="progress form-group" style="position: fixed;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto; z-index: 1000 !important;">
+          <div  class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">{{progress}}%
+          </div>
+        </div>
+<div class="container-fluid page-wrapper">
+    <section class="seles-section">
+        <mat-card>
+            <div class="container-fluid">
+
+                <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                    <mat-step [stepControl]="addLiveClassFormGroup">
+                        <form (ngSubmit)="submitLiveCLass()" [formGroup]="addLiveClassFormGroup">
+                            <ng-template matStepLabel>ADD LIVE CLASSES</ng-template>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-12">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Live Class Title</mat-label>
+                                        <input matInput placeholder="SBI PO" formControlName="courseName" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Actual Price</mat-label>
+                                        <input type="number" matInput placeholder="5000" formControlName="actualPrice" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Offer Price</mat-label>
+                                        <input type="number" matInput placeholder="4000" formControlName="offerPrice" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-label>Product Feature</mat-label>
+                                    <angular-editor formControlName="productFeature" [config]="editorConfig" required></angular-editor>
+
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-label>Product Description</mat-label>
+                                    <angular-editor formControlName="productDesc" [config]="editorConfig" required></angular-editor>
+
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 30px;">
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>From date</mat-label>
+                                        <input matInput [matDatepicker]="fromDate" formControlName="fromDate" required>
+                                        <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #fromDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>To date</mat-label>
+                                        <input matInput [matDatepicker]="toDate" formControlName="toDate" required>
+                                        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #toDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+
+
+
+                            </div>
+                            <!--row-->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Live Class</mat-label>
+                                        <input type="number" matInput placeholder="4000" formControlName="liveClass" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Mock Tests</mat-label>
+                                        <input type="number" matInput placeholder="4000" formControlName="mockTests" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>PDF Notes</mat-label>
+                                        <input type="number" matInput placeholder="4000" formControlName="pdfNotes" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Practice Question</mat-label>
+                                        <input type="number" matInput placeholder="4000" formControlName="practiceQuestion" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <!--row-->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Demo Video Link</mat-label>
+                                        <input matInput formControlName="product_demo_vdo" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <mat-label>Select Language</mat-label>
+                                    <br><br>
+                                    <mat-radio-group aria-label="Select an option" formControlName="language">
+                                        <mat-radio-button value="English">English</mat-radio-button>
+                                        <mat-radio-button value="Hindi">Hindi</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                            </div>
+                            <!--row-->
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Select Course</mat-label>
+                                        <mat-select formControlName="courses"  required>
+                                            <mat-option *ngFor="let course of courseLists" [value]="course.courses_id">{{course.courses_name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <img [src]="url2" style="margin: 20px 0px 0px 0px; width: 100%;" />
+                                    <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)" formControlName="product_img" accept=".png, .jpg, .jpeg" value="Add Product Image" />
+                                </div>
+                            </div>
+
+                            <!--row-->
+                            <div class="row">
+                                <button type="submit" mat-raised-button matStepperNext color="primary">
+                                    <mat-icon>save</mat-icon> Save And Next
+                                </button>
+
+                            </div>
+                            <!--row-->
+
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup" (ngSubmit)="submitTeacher(getTeacher_id.value)">
+                            <ng-template matStepLabel>Fill out Teacher Details</ng-template>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Teacher</mat-label>
+                                <mat-select [formControl]="teacher_id" multiple #getTeacher_id>
+
+                                    <mat-option *ngFor="let teacher of teacherList" [value]="teacher.teacher_id">{{teacher.teacher_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div>
+
+
+                                <button type="submit" mat-raised-button matStepperNext color="primary">
+                                    <mat-icon>save</mat-icon> Save And Next
+                                </button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Done</ng-template>
+
+                        <mat-card *ngFor="let product of productDetails">
+                            <div class="row">
+                                <div class="col-8">
+                                    <h1>{{product.live_class_title}}</h1>
+                                    <span>Starts on {{product.start_date}} </span>| <span>{{product.validity}} Days</span>| <span> Language:
+                    {{product.product_language}}</span>
+                                    <br>
+
+                                    <span>Live Class: {{product.live_class}} </span>| <span>Mock Test: {{product.mock_test}}</span> |<span>
+                    PDF Notes: {{product.pdf_notes}}</span>|
+                                    <span> Practice Questions: {{product.practice_question}}</span>
+                                    <h3>Description</h3>
+                                    <p [innerHTML]="product.description"></p>
+
+
+                                </div>
+                                <div class="col-4">
+                                    <img src="http://localhost/avisionEstore/{{product.image}}" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h1>Asigned Teacher</h1>
+                                <br>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-3" *ngFor="let teacher of teacherDetails">
+                                    <mat-card class="text-center">
+                                        <img src="{{teacher.teacher_image}}" class="img-fluid" style="height: 60px; border-radius: 50%;">
+                                        <h3>{{teacher.teacher_name}}</h3>
+                                        <p>{{teacher.teacher_experience}}| {{teacher.teacher_qualification}}</p>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </mat-card>
+
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button (click)="stepper.reset()">Reset</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+        </mat-card>
+    </section>
+
+</div>

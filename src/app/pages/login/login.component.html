@@ -1,0 +1,43 @@
+<section class="login-block">
+    <div class="container align-middle">
+        <div class="row align-middle">
+            <div class="col-md-4 login-sec ">
+                <h2 class="text-center">Login Now</h2>
+                <form [formGroup]="loginFormGroup" (ngSubmit)="login()" class="login-form">
+                    <ng-template matStepLabel>Fill out your name</ng-template>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email/Phone Number</mat-label>
+                        <input matInput placeholder="Email Or Phone number" formControlName="userName" required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Enter your password</mat-label>
+                        <input formControlName="userPassword" matInput [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <button mat-raised-button type="submit" color="warn" class="btn-block">Login To Your Account</button>
+
+                </form>
+            </div>
+            <div class="col-md-8 banner-sec">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <div class="banner-text">
+                                    <h2>Welcome To Avision Admin Panel</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
