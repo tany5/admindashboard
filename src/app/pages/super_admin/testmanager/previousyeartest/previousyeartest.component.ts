@@ -5,6 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { PreviousyeartestService } from './previousyeartest.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 @Component({
   selector: 'app-previousyeartest',
   templateUrl: './previousyeartest.component.html',
@@ -17,7 +20,7 @@ export class PreviousyeartestComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
- 
+  public Editor = ClassicEditor;
 
 
   fullLengthQuiz: any = []

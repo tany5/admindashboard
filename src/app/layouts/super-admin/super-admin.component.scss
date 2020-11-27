@@ -55,15 +55,35 @@ app-header {
 }
 
 .main.contents {
-    min-height: 100vh;
+    min-height: 40vh;
     margin-top: 64px;
     /* height of header */
     background: #eff5f7!important;
     ;
 }
 
+
+
+
 .main.footer {
+    width: 100%;
+    padding-left: 17.1875rem;
+    background-color: #ebeef6;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    margin-top: 90px;
+}
+
+.main.footer .copyright {
+    padding: 0.9375rem;
+}
+
+.main.footer .copyright p {
+    padding-left: 2rem;
+    margin: 0;
+    font-size: 12px;
+}
+
+.main.footer .copyright a {
+    color: #3a7afe;
 }

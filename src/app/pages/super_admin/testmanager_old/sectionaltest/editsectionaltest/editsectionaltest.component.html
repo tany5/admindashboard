@@ -1,0 +1,208 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Full Length Quiz
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="video-course-section">
+  <div class="container-fluid">
+
+    <form [formGroup]="addQuiz" (ngSubmit)="addQuizDetails()">
+      <ng-template matStepLabel>Creat Test</ng-template>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Course</mat-label>
+            <mat-select formControlName="subject" [(ngModel)]="subject">
+              <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+                {{subject.type_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Course</mat-label>
+            <mat-select #subcategory formControlName="subcategory"
+              (selectionChange)="getSubCategorySection(subcategory.value)" [(ngModel)]="subCategoryId">
+              <mat-option *ngFor="let subcategory of subCategoryLists" [value]="subcategory.sub_category_id">
+                {{subcategory.sub_category_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Section</mat-label>
+            <mat-select #subsection formControlName="coursesection"
+              (selectionChange)="getSubSection(subcategory.value, subsection.value)" [(ngModel)]="sectionId">
+              <mat-option *ngFor="let coursesection of courseTypeSectionLists" [value]="coursesection.section_id">
+                {{coursesection.section_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+      </div>
+      <div class="row">
+
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Section</mat-label>
+            <mat-select formControlName="chnageable" [(ngModel)]="changable">
+              <mat-option [value]="'1'">
+                Chnageable
+              </mat-option>
+              <mat-option [value]="'0'">
+                Non-chnageable
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>       
+      </div>
+      <!--row-->
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Add Test Name</mat-label>
+            <input matInput formControlName="quizname" [(ngModel)]="quizName">
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Number Of Questions</mat-label>
+            <input type="number" matInput formControlName="noofqs" [(ngModel)]="noQs">
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Total Duration (in Minutes)</mat-label>
+            <input type="number" matInput formControlName="duration" [(ngModel)]="duration">
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Correct Marks</mat-label>
+            <input matInput formControlName="correctmarks" [(ngModel)]="correctMarks" readonly>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Negetive Marks</mat-label>
+            <input matInput formControlName="negativemarks" [(ngModel)]="negativeMarks" readonly>
+          </mat-form-field>
+        </div>
+      </div>
+      <input type="hidden" formControlName="quiz_id" [(ngModel)]="prodId">
+      <div class="row">
+        <div class="col-110 col-lg-4 col-sm-8 mx-auto">
+          <button type="submit" mat-raised-button class="btn-block btn-success">Update Qquiz Details</button>
+        </div>
+
+      </div>
+    </form>
+
+    <div class="row pt-5">
+      <div class="col-12">
+        <h1 class="text-center">All Full Length Quiz</h1>
+      </div>
+    </div>
+    <mat-card class="pt-5">
+      <div class="row">
+        <div class="col-sm-12 col-md-8">
+          <div class="col-12 col-md-6">
+            <mat-form-field>
+              <mat-label>Search</mat-label>
+              <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-4" *ngIf="remainQuestion > 0">
+          <button mat-raised-button color="primary" class="float-right"
+            [routerLink]="['/superadmin/addfulllengthtestquestion', prodId]">
+            <mat-icon>add</mat-icon> Add Question
+          </button>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> SR NO </th>
+                <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="question">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> question </th>
+                <td mat-cell *matCellDef="let row" [innerHTML]="row.question"> </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="directions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> directions </th>
+                <td mat-cell *matCellDef="let row"> {{row.directions}} </td>
+              </ng-container>
+
+              <!-- Color Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                  <button mat-raised-button color="primary" (click)="editquestion(row.question_id)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-raised-button color="warn" (click)="deletequestion(row.question_id, row.question)">
+                    <mat-icon>clear</mat-icon>
+                  </button>
+
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+
+<section class="video-course-section">
+  <div class="container-fluid">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="coupon">
+        <form [formGroup]="coupon" (ngSubmit)="submitCouponDetails()">
+          <ng-template matStepLabel>Asign Coupon For Plan</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <h1>ASSIGN COUPON</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Student</mat-label>
+                <mat-select #course formControlName="student_id" required>
+                  <mat-option *ngFor="let student of allStudetns" [value]="student.user_id">
+                    {{student.user_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Course</mat-label>
+                <mat-select #plan formControlName="plan" required (selectionChange)="getDuration(plan.value)">
+                  <mat-option *ngFor="let plan of getPlan" [value]="plan.plan_id">
+                    {{plan.plan_name}} (duration{{plan.duration}})
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Student</mat-label>
+                <mat-select #course formControlName="coupon_code" required>
+                  <mat-option *ngFor="let student of couponAsign" [value]="student.cupon_id">
+                    {{student.cupon_code}} (Offer Price {{student.offer_price}})
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="col-12 col-md-4 mx-auto">
+            <button type="submit" mat-raised-button class="btn-block btn-success">Asign Coupon</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- <mat-step [stepControl]="coupon">
+        <form [formGroup]="coupon" (ngSubmit)="submitCouponDetails()">
+          <ng-template matStepLabel>Asign Coupon For Plan</ng-template>
+        </form>
+      </mat-step>    -->
+    </mat-horizontal-stepper>
+  </div>
+</section>

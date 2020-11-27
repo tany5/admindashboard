@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SuperAdminModule } from './layouts/super-admin/super-admin.module'
@@ -18,6 +17,16 @@ import { EditliveclassmodalComponent } from './pages/editliveclassmodal/editlive
 import { EditcoursemodalComponent } from './pages/editcoursemodal/editcoursemodal.component';
 import { EditsmallquizcategoryComponent } from './pages/super_admin/smallquiz/addsmallquizcategory/editsmallquizcategory/editsmallquizcategory.component';
 import { EditsmallquizchildcategoryComponent } from './pages/super_admin/smallquiz/addsmallquizchildcategory/editsmallquizchildcategory/editsmallquizchildcategory.component';
+import { ShowvideomodalComponent } from './pages/super_admin/study/addstudyvideo/showvideomodal/showvideomodal.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DatePipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { catchError, retry } from 'rxjs/operators';
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +36,7 @@ import { EditsmallquizchildcategoryComponent } from './pages/super_admin/smallqu
     EditcoursemodalComponent,
     EditsmallquizcategoryComponent,
     EditsmallquizchildcategoryComponent,
-                 
+    ShowvideomodalComponent                 
   ],
   imports: [
   BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -41,10 +50,13 @@ import { EditsmallquizchildcategoryComponent } from './pages/super_admin/smallqu
   FormsModule,
   ReactiveFormsModule,
   NgxMaterialTimepickerModule,
-  PdfViewerModule
-    
+  PdfViewerModule,
+  DragDropModule,
+  ChartsModule,
+  Ng2SearchPipeModule,
+  CKEditorModule     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
   entryComponents: [AddliveclassvideomodalComponent, EditliveclassmodalComponent, EditcoursemodalComponent, EditsmallquizcategoryComponent, EditsmallquizchildcategoryComponent]
 })

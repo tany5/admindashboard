@@ -14,7 +14,7 @@ import { EditsectionaltestService } from './editsectionaltest.service'
 })
 export class EditsectionaltestComponent implements OnInit {
   addQuiz: FormGroup
-  displayedColumns: string[] = ['id', 'question', 'directions', 'action'];
+  displayedColumns: string[] = ['id', 'question', 'question_hindi', 'directions', 'action'];
   prodId: any
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -47,6 +47,7 @@ export class EditsectionaltestComponent implements OnInit {
 
 
     this.service.getQuizQuestion(this.prodId).subscribe((res) => {
+      console.log(res)
       this.fullLengthQuiz = res['all_full_length_quiz_question']
 
       this.dataSource = new MatTableDataSource(this.fullLengthQuiz);
@@ -192,12 +193,12 @@ export class EditsectionaltestComponent implements OnInit {
   }
 
   editquestion(question_id) {
-    alert(question_id)
+    
     this.router.navigate(['/superadmin/editfulllengthtestquestion', question_id])
   }
 
   deletequestion(question_id, question) {
-    alert(question_id)
+    
     var result = confirm(`Are You Sure to Delete ?`)
     if(result) {
       this.service.deleteQuestionByQuestionId(question_id).subscribe((res)=> {

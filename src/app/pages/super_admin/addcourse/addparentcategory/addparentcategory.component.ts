@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddparentcategoryService } from './addparentcategory.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-addparentcategory',
   templateUrl: './addparentcategory.component.html',
@@ -27,7 +28,7 @@ export class AddparentcategoryComponent implements OnInit {
 
 
 
-  constructor(private _formbuilder: FormBuilder, private service: AddparentcategoryService, private snackbar: MatSnackBar) {
+  constructor(private _formbuilder: FormBuilder, private service: AddparentcategoryService, private snackbar: MatSnackBar, private router: Router) {
     this.service.getAllCourse().subscribe((res)=> {       
       this.allCourses = res['all_courses'] 
     })
@@ -103,7 +104,8 @@ export class AddparentcategoryComponent implements OnInit {
 
 
   edit_quiz(quiz_id) {
-    //this.router.navigate(['superadmin/editcourse/', quiz_id])
+    alert(quiz_id)
+    this.router.navigate(['superadmin/editparentcategory/', quiz_id])
   }
 
   delete_sub_course(quiz_id, quiz_name) {   

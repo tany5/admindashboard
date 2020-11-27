@@ -1,0 +1,111 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Concept
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="video-course-section">
+  <div class="container">
+    <mat-card>
+      <div class="row">
+        <div class="col-12">
+          <h1>GENERATE COUPON CODE</h1>
+        </div>
+      </div>
+      <form [formGroup]="concept" (ngSubmit)="submitConceptDetails()">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Subject</mat-label>
+              <mat-select #subject formControlName="subject" required (selectionChange)="getChapted(subject.value)" [(ngModel)]="parent_subject_id">
+                <mat-option *ngFor="let subject of subJectLists" [value]="subject.type_id">
+                  {{subject.type_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6" *ngIf="!showSubChapter">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Chapter</mat-label>
+              <mat-select #chapter formControlName="chapter" required
+                (selectionChange)="getSubChapter(chapter.value, subject.value)" [(ngModel)]="chapter_id">
+                <mat-option *ngFor="let chapter of chaptertLists" [value]="chapter.chapter_id">
+                  {{chapter.chapter_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <input type="hidden" formControlName="study_concept_id" [(ngModel)]="prodId">
+          </div>
+
+          <div class="col-12 col-md-3" *ngIf="showSubChapter">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Chapter</mat-label>
+              <mat-select #chapter formControlName="chapter" required
+                (selectionChange)="getSubChapter(chapter.value, subject.value)" [(ngModel)]="chapter_id">
+                <mat-option *ngFor="let chapter of chaptertLists" [value]="chapter.chapter_id">
+                  {{chapter.chapter_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-3" *ngIf="showSubChapter">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Sub Chapter</mat-label>
+              <mat-select #chapter formControlName="subchapter" required [(ngModel)]="study_subchapter_id">
+                <mat-option *ngFor="let subchapter of subChapter" [value]="subchapter.sub_chapter_id">
+                  {{subchapter.sub_chapter_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter Concept Name</mat-label>
+              <input matInput placeholder="Coupon Code" formControlName="conceptname" [(ngModel)]="chapter_name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <mat-label>Enter Concept</mat-label>
+            <angular-editor formControlName="concept_details" [config]="editorConfig" required [(ngModel)]="concept_data"></angular-editor>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 col-md-6 mx-auto">
+            <button mat-raised-button type="submit" class="btn-success btn-block">Edit Concept</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</section>

@@ -30,6 +30,6 @@ export class AddparentcategoryService {
 
   deleteParentCategory(id) {
     let headers = new  HttpHeaders ({'Content-Type': 'application/json'})
-    return this.webService.get(`get_sub_category_by_course_id/${id}`, headers)
+    return this.webService.get(`delete_parent_category/${id}`, headers)
   }
 }

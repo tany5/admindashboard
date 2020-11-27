@@ -1,0 +1,188 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+    background-size: cover;
+    position: relative;
+    border-radius: 0;
+    color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Post Approval
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="video-course-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <mat-card>
+          <div class="row p-t-5">
+            <div class="col-sm-12 col-md-8">
+              <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="mat-elevation-z8 table-responsive">
+                <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SR NO </th>
+                    <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="qustext">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Post </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{row.qus_text}} </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="qusimg">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Post Image </th>
+                    <td mat-cell *matCellDef="let row">
+                      <ng-container *ngIf="row.qus_img">
+                        <img [src]="row.qus_img" class="img-fluid" style="max-height: 200px; max-width: 200px;">
+                      </ng-container>
+                      <ng-container *ngIf="!row.qus_img">
+                        No Post Image
+                      </ng-container>
+
+                    </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{row.user_name}}
+                    </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="posttypestatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Post Type Status </th>
+                    <td mat-cell *matCellDef="let row">
+
+                      <ng-container *ngIf="row.post_type_status == 1">
+                        <button mat-raised-button class="btn-success">Query</button>
+                      </ng-container>
+
+                      <ng-container *ngIf="row.post_type_status == 2">
+                        <button mat-raised-button class="btn-primary">MCQ</button>
+                      </ng-container>
+
+                      <ng-container *ngIf="row.post_type_status == 3">
+                        <button mat-raised-button class="btn-warning">Information</button>
+                      </ng-container>
+
+                      <ng-container *ngIf="row.post_type_status == 4">
+                        <button mat-raised-button class="btn-info">Exam Experience</button>
+                      </ng-container>
+
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="attachment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Attachment </th>
+
+                    <td mat-cell *matCellDef="let row">
+                      <ng-container *ngIf="row.attachment">
+                        <button mat-raised-button class="btn-info" (click)="downloadFile(row.attachment)">Download
+                          Attachment</button>
+                      </ng-container>
+
+                      <ng-container *ngIf="!row.attachment">
+                        No Attachment
+                      </ng-container>
+                    </td>
+                  </ng-container>
+
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                    <td mat-cell *matCellDef="let row">
+                      <p><b>{{row.created_date | date}}</b></p>
+
+                    </td>
+                  </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="time">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Time </th>
+                    <td mat-cell *matCellDef="let row">
+                      <p><b>{{row.post_time  }}</b></p>
+                    </td>
+                  </ng-container>
+
+
+
+
+                  <!-- Color Column -->
+                  <ng-container matColumnDef="approve">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Approve </th>
+                    <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                      <ng-container *ngIf="row.status == '0'">
+                        <button mat-raised-button  class="mx-auto btn-success"
+                        (click)="approve_post(row.qus_id, '1', row.qus_text)">
+                        Approve
+                      </button>
+                      </ng-container>
+
+                      <ng-container *ngIf="row.status == '1'">
+                        <button mat-raised-button  class="mx-auto btn-danger"
+                        (click)="approve_post(row.qus_id, '0',  row.qus_text)">
+                        Reject
+                      </button>
+                      </ng-container>
+
+                     
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+                    <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                      <button mat-raised-button color="warn" class="mx-auto" (click)="edit_quiz(row.qus_id )">
+                        Delete
+                      </button>
+
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+              </div>
+            </div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>

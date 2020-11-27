@@ -1,0 +1,210 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="video-course-section">
+  <div class="container">
+    <form [formGroup]="asignCoupon" (ngSubmit)="submitCoupnDetails()">
+      <mat-card>
+        <div class="row">
+          <div class="col-12">
+            <h1>GENERATE COUPON CODE</h1>
+          </div>
+        </div>
+        <div class="row" *ngIf="showCoupon">
+          <div class="col-12 col-md-3 coupon">
+            <div class="row no-gutters">
+              <div class="col-9">
+                <mat-form-field appearance="outline">
+                  <mat-label>Coupon</mat-label>
+                  <input matInput placeholder="Coupon Code" formControlName="coupon" [(ngModel)]="coupon">
+                </mat-form-field>
+              </div>
+              <div class="col-3 m-t-2" style="margin-top: 5px;">
+                <button type="button" mat-raised-button class="btn-success mx-auto" style="height: 50px;"
+                  (click)="makcoupon(6)">
+                  <mat-icon>refresh</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Offer Price</mat-label>
+              <input type="number" matInput placeholder="Offer Price" formControlName="offer_price">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Offer For</mat-label>
+              <mat-select #productType formControlName="coupon_status" required
+                (selectionChange)="getProductDetails(productType.value)">
+                <mat-option value="2">
+                  Plan
+                </mat-option>
+
+                <mat-option value="4">
+                  Live Class
+                </mat-option>
+
+                <mat-option value="1">
+                  Online Video Course
+                </mat-option>
+
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Product</mat-label>
+              <mat-select formControlName="product_id" required>
+                <mat-option *ngFor="let product of productDetails" [value]="product.product_id">
+                  {{product.product_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-10 col-md-4 mx-auto">
+            <button type="submit" mat-raised-button class="btn-success btn-block">Add Coupon</button>
+          </div>
+        </div>
+      </mat-card>
+
+    </form>
+
+    <mat-card>
+      <div class="row p-t-5">
+        <div class="col-sm-12 col-md-8">
+          <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-12 col-md-4">
+          <button mat-raised-button class="btn-success float-right" [routerLink]="['/superadmin/addstudent']">Add
+            Student</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> SR NO </th>
+                <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="cuponcode">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> cupon_code </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.cupon_code}} </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="offerprice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> offer_price </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.offer_price}} </td>
+              </ng-container>
+
+               <!-- Progress Column -->
+               <ng-container matColumnDef="productname">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> product_name </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.product_name}}
+                </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="couponstatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Coupon Type </th>
+                <td mat-cell *matCellDef="let row">
+
+                  <ng-container *ngIf="row.coupon_status == 2">
+                    Coupon For Plan
+                  </ng-container>
+
+                  <ng-container *ngIf="row.coupon_status == 4">
+                    Coupon For Live Class
+                  </ng-container>
+
+                  <ng-container *ngIf="row.coupon_status == 1">
+                    Coupon For Video Course
+                  </ng-container>                  
+                </td>
+              </ng-container>
+
+
+                           
+
+
+              <!-- Color Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                  <ng-container *ngIf="row.coupon_active == 1">
+                    <button mat-raised-button color="warn" (click)="edit_quiz(row.cupon_id, 0 )">
+                      Deactive
+                    </button>
+                  </ng-container>
+
+                  <ng-container *ngIf="row.coupon_active == 0">
+                    <button mat-raised-button color="primary" (click)="edit_quiz(row.cupon_id, 1 )">
+                      Active
+                    </button>
+                  </ng-container>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>
+
+      </div>
+    </mat-card>
+  </div>
+</section>

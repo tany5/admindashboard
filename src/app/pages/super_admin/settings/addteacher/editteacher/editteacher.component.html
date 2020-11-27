@@ -1,0 +1,118 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Teacher Register</h1>
+            </div>
+            <form [formGroup]="addTeacher" (ngSubmit)="submitTeacherDetails()">
+                <div class="row" *ngIf="showCourse">
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Teacher Name</mat-label>
+                            <input matInput formControlName="addteachername" [(ngModel)]="teacher_name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Teacher Phone No.</mat-label>
+                            <input type="number" matInput formControlName="addteacherph" [(ngModel)]="teacher_phone">
+                        </mat-form-field>
+                        <input type="hidden" formControlName="teacher_id" [(ngModel)]="teacher_id">
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Password</mat-label>
+                            <input matInput formControlName="password" [(ngModel)]="teacher_pass_val">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Qualification</mat-label>
+                            <input matInput formControlName="qualification" [(ngModel)]="teacher_qualification">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Designation</mat-label>
+                            <input matInput formControlName="designation" [(ngModel)]="teacher_designation">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Experience</mat-label>
+                            <input matInput formControlName="exp" [(ngModel)]="teacher_experience">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Parent Subject</mat-label>
+                            <mat-select formControlName="course" multiple [(ngModel)]="teacher_course">
+                                <mat-option *ngFor="let course of courses" [value]="course.courses_id">
+                                    {{course.courses_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Quiz Type</mat-label>
+                            <mat-select formControlName="quizType" multiple [(ngModel)]="teacher_course_assign">
+                                <mat-option *ngFor="let quiz of quizType" [value]="quiz.type_id">
+                                    {{quiz.type_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-6">
+                        <img [src]="src" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="teacher_img" />
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Add Teacher
+                            Details</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>    

@@ -1,0 +1,75 @@
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+    background-size: cover;
+    position: relative;
+    border-radius: 0;
+    color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="video-course-section">
+  <div class="container">
+    <mat-card>
+      <form [formGroup]="subCourse" (ngSubmit)="submitSubCourseDetails()">
+        <div class="row">
+          <div class="col-12">
+            <h1>ADD PARENT CATEGORY</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Course</mat-label>
+              <mat-select #course formControlName="course" required [(ngModel)]="courses_id">
+                <mat-option *ngFor="let courses of allCourses" [value]="courses.courses_id">
+                  {{courses.courses_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Sub-Course Name </mat-label>
+              <input matInput placeholder="Sub Course Name..." formControlName="subcoursename" required [(ngModel)]="subcoursename">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Sub-Course Description</mat-label>
+              <textarea matInput rows="5" formControlName="subcoursedesc" [(ngModel)]="subcoursedesc"></textarea>
+            </mat-form-field>
+            <input type="hidden" formControlName="subcourseid" [(ngModel)]="prodId">
+          </div>
+        </div>
+        <div clss="row">
+          <div class="col-12 col-md-4 mx-auto">
+            <button type="submit" mat-raised-button class="btn-success">Edit Sub Course</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</section>

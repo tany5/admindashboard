@@ -1,0 +1,115 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container-fluid">
+        <div class="row">
+
+
+            <form [formGroup]="addProductVideo" (ngSubmit)="addVideoproductVideoDetails()">
+                <ng-template matStepLabel>Add Video </ng-template>
+               
+                <div class="row mt-5">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Video Category</mat-label>
+                            <mat-select formControlName="videocategory" [(ngModel)]="category_id">
+                                <mat-option *ngFor="let category of videoCategoryLists"
+                                    [value]="category.video_category_id">
+                                    {{category.video_category_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Video Subject</mat-label>
+                            <mat-select #subject formControlName="videosubject"
+                                (selectionChange)="getVideoChapter(subject.value)" [(ngModel)]="type_id">
+                                <mat-option *ngFor="let subject of videoSubjectLists" [value]="subject.type_id">
+                                    {{subject.type_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Video Chapter</mat-label>
+                            <mat-select formControlName="videochapter" [(ngModel)]="chapter_id">
+                                <mat-option *ngFor="let chapter of chapterLists" [value]="chapter.chapter_id">
+                                    {{chapter.chapter_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Video Name</mat-label>
+                            <input matInput formControlName="video_name" [(ngModel)]="video_name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Video Url</mat-label>
+                            <input matInput formControlName="video_url" [(ngModel)]="video_url">
+                        </mat-form-field>
+                        <input type="hidden" formControlName="product_id" [(ngModel)]="product_id">
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <section class="example-section">
+                            <mat-checkbox class="example-margin" formControlName="demo" [(ngModel)]="checkeddemoVideo">Set As Demo</mat-checkbox>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-4">
+                        <h1>Video Thumb Image</h1>
+                        <img [src]="src2" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile2($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="video_thumb" />
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-12 col-md-10 col-lg-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Submit Video
+                            Details</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>

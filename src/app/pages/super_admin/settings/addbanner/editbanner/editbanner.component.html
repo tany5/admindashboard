@@ -1,0 +1,119 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">ADD BANNER</h1>
+            </div>
+            <form [formGroup]="addBannerDetails" (ngSubmit)="addBanner()">
+                <div class="row">
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Banner Name</mat-label>
+                            <input matInput formControlName="banner_name" [(ngModel)]="banner_name"  [readonly]="isDisabled">
+                        </mat-form-field>
+                        <input type="text" [(ngModel)]="banner_id" formControlName="banner_id">
+                    </div>
+
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-radio-group aria-label="Select an option" formControlName="banner_type" [(ngModel)]="get_banner_type">
+                            <mat-radio-button value="1" class="example-radio-button" (change)="setAdditionalItems(0)">Normal Banner</mat-radio-button>
+                            <mat-radio-button value="2" class="example-radio-button" (change)="setAdditionalItems(0)">Plan Banner</mat-radio-button>
+                            <mat-radio-button value="3" class="example-radio-button" (change)="setAdditionalItems(0)">App Banner</mat-radio-button>
+                            <mat-radio-button value="4" class="example-radio-button" (change)="setAdditionalItems(0)">Register Banner</mat-radio-button>
+                            <mat-radio-button value="5" class="example-radio-button" (change)="setAdditionalItems(0)">Study Banner</mat-radio-button>
+                            <mat-radio-button #home value="6" class="example-radio-button" (change)="setAdditionalItems(home.value)">Home Banner</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="col-10 col-md-6">
+                        <img [src]="src" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="banner_img" />
+                    </div>
+                </div>
+                <div class="row mt-5" *ngIf="showHomeBannerDetails">
+                    <div class="col-10 col-md-6 mx-auto">
+                       
+                            <h2>Main Heading</h2>
+                            
+                            <angular-editor [config]="editorConfig" required formControlName="main_heading" [(ngModel)]="main_heading">
+                            </angular-editor>
+                    
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">
+                       
+                            <h2>Sub Heading</h2>                            
+                            <angular-editor [config]="editorConfig" required formControlName="sub_heading" [(ngModel)]="sub_heading">
+                            </angular-editor>
+                        
+                    </div>
+
+                    <div class="col-10 col-md-8 mx-auto">                        
+                            <h2>Banner Sub Heading</h2>                            
+                            <angular-editor [config]="editorConfig" required formControlName="banner_sub_sub_heading" [(ngModel)]="banner_sub_sub_heading">
+                            </angular-editor>
+                        
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <h2>Button Text</h2>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Button Text</mat-label>
+                            <input matInput formControlName="button_text" [(ngModel)]="button_text">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">
+                        <h2>Image Link</h2>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Image Link</mat-label>
+                            <input matInput formControlName="image_link" [(ngModel)]="image_link">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">
+                        <img [src]="src2" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFileBackgroud($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="banner_background_image" />
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Edit  Banner</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+ </section>   

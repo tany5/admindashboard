@@ -1,0 +1,208 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">ADD BANNER</h1>
+            </div>
+            <form [formGroup]="addBannerDetails" (ngSubmit)="addBanner()">
+                <div class="row">
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Banner Name</mat-label>
+                            <input matInput formControlName="banner_name" [readonly]="isDisabled">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-3 mx-auto">
+                        <mat-radio-group aria-label="Select an option" formControlName="banner_type">
+                            <mat-radio-button value="1" class="example-radio-button" (change)="setAdditionalItems(0)">Normal Banner</mat-radio-button>
+                            <mat-radio-button value="2" class="example-radio-button" (change)="setAdditionalItems(0)">Plan Banner</mat-radio-button>
+                            <mat-radio-button value="3" class="example-radio-button" (change)="setAdditionalItems(0)">App Banner</mat-radio-button>
+                            <mat-radio-button value="4" class="example-radio-button" (change)="setAdditionalItems(0)">Register Banner</mat-radio-button>
+                            <mat-radio-button value="5" class="example-radio-button" (change)="setAdditionalItems(0)">Study Banner</mat-radio-button>
+                            <mat-radio-button #home value="6" class="example-radio-button" (change)="setAdditionalItems(home.value)">Home Banner</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="col-10 col-md-6">
+                        <img [src]="src" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="banner_img" />
+                    </div>
+                </div>
+                <div class="row mt-5" *ngIf="showHomeBannerDetails">
+                    <div class="col-10 col-md-6 mx-auto">
+                       
+                            <h2>Main Heading</h2>                            
+                            <angular-editor [config]="editorConfig" required formControlName="main_heading">
+                            </angular-editor>
+                    
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">                       
+                            <h2>Sub Heading</h2>                            
+                            <angular-editor [config]="editorConfig" required formControlName="sub_heading">
+                            </angular-editor>                        
+                    </div>
+
+                    <div class="col-10 col-md-8 mx-auto">                        
+                            <h2>Banner Sub Heading</h2>                            
+                            <angular-editor [config]="editorConfig" required formControlName="banner_sub_sub_heading">
+                            </angular-editor>                        
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <h2>Button Text</h2>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Button Text</mat-label>
+                            <input matInput formControlName="button_text">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">
+                        <h2>Image Link</h2>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Image Link</mat-label>
+                            <input matInput formControlName="image_link">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-6 mx-auto">
+                        <img [src]="src2" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFileBackgroud($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="banner_background_image" />
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Add Banner</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+              <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input matInput (keyup)="applyFilter($event)"  #input>
+              </mat-form-field>
+            </div>
+          </div>
+          
+          
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+          
+              <!-- ID Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+              </ng-container>
+          
+              <!-- Progress Column -->
+              <ng-container matColumnDef="banner_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Banner Name </th>
+                <td mat-cell *matCellDef="let row" [innerHTML]="row.banner_name"> </td>
+              </ng-container>
+
+
+               <!-- Progress Column -->
+               <ng-container matColumnDef="banner_image">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Banner Image </th>
+                <td mat-cell *matCellDef="let row"> 
+                    <img src="http://localhost/avisionEstore/{{row.banner_image}}" style="max-height: 150px; max-width: 200px;">
+                </td>
+              </ng-container>
+
+
+               <!-- Progress Column -->
+               <ng-container matColumnDef="banner_type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Banner Name </th>
+                <td mat-cell *matCellDef="let row">
+                    
+                    <ng-container *ngIf="row.banner_type == '1'">
+                        Normal Banner
+                    </ng-container>
+
+                    <ng-container *ngIf="row.banner_type == '2'">
+                        Plan Banner
+                    </ng-container>
+
+                    <ng-container *ngIf="row.banner_type == '3'">
+                        App Banner
+                    </ng-container>
+
+                    <ng-container *ngIf="row.banner_type == '4'">
+                        Register Banner
+                    </ng-container>
+
+                    <ng-container *ngIf="row.banner_type == '5'">
+                        Register Banner
+                    </ng-container>
+
+                    <ng-container *ngIf="row.banner_type == '6'">
+                        Home Banner
+                    </ng-container>
+                </td>
+              </ng-container>
+      
+                 <!-- Color Column -->
+                 <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                  <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                    <button mat-raised-button color="primary" (click)="edit_quiz(row.banner_id, row.banner_type)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-raised-button color="warn" (click)="delete_quiz(row.banner_id, row.banner_name, row.banner_type)">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+      
+                  </td>
+                </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+          </div>
+    </div>
+</section>

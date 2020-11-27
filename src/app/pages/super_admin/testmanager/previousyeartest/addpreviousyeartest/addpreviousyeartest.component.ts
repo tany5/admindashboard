@@ -7,6 +7,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { AddpreviousyeartestService } from './addpreviousyeartest.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-addpreviousyeartest',
@@ -14,7 +15,7 @@ import { AddpreviousyeartestService } from './addpreviousyeartest.service'
   styleUrls: ['./addpreviousyeartest.component.scss']
 })
 export class AddpreviousyeartestComponent implements OnInit {
-
+  public Editor = ClassicEditor;
   @ViewChild("stepper") myStepper: MatStepper;
   addQuiz: FormGroup
   courseTypeSectionLists: any = []
@@ -31,37 +32,9 @@ export class AddpreviousyeartestComponent implements OnInit {
   selValue: any = 0
   totalQuestion: any
   addedQuestion
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['bold']
-      ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
-      },
-    ]
-  };
-
+  
   isLinear: boolean = false
-  quizId: any = 132  
+  quizId: any   
   shouldSubmit: boolean = false
   quizLists: any = []
   showAnswersLists: boolean = false
@@ -108,8 +81,7 @@ export class AddpreviousyeartestComponent implements OnInit {
       noofqs: ['', Validators.required],
       duration: ['', Validators.required],
       chnageable: ['', Validators.required],
-      year: ['', Validators.required],
-      subject: ['', Validators.required]
+      year: ['', Validators.required]
     })
 
    
@@ -132,12 +104,18 @@ export class AddpreviousyeartestComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this._formbuilder.group({
-      answer: ['', Validators.required],
+      answer: [''],
       status: [''],
       question_statement: [''],
       ans_desc: [''],
       daily_quizId: [''],
-      direction: ['']      
+      direction: [''],
+      direction_hindi:[''],
+      question_statement_hindi: [''],
+      answer_hindi: [''],
+      ans_desc_hindi: ['']
+
+
     });
   }
 
@@ -203,8 +181,11 @@ export class AddpreviousyeartestComponent implements OnInit {
             break;
           case HttpEventType.Response:
             console.log(event.body)            
+            this.totalQuestion = this.addQuiz.get('noofqs').value  
+            this.addedQuestion = this.addQuiz.get('noofqs').value 
             this.dailyQuizId = event.body.quiz_id
             this.myStepper.next();
+
         }
       })
     }
@@ -223,13 +204,13 @@ export class AddpreviousyeartestComponent implements OnInit {
       alert("Please Add All The Answer Feilds")
     }
 
-    else if(!answer_descriptions) {
-      alert("Please Add Answer Descriptions")
-    }
+    // else if(!answer_descriptions) {
+    //   alert("Please Add Answer Descriptions")
+    // }
 
-    else if(!question_statement) {
-      alert("Please Add Question Statement")
-    }
+    // else if(!question_statement) {
+    //   alert("Please Add Question Statement")
+    // }
 
     // else if(this.showDirectionFeild && !direction) {
     //   alert("Please Add Question Direction")
@@ -261,6 +242,14 @@ export class AddpreviousyeartestComponent implements OnInit {
             this.questionAnswer.controls.forEach(group => group.get('status').reset())
             this.questionAnswer.controls.forEach(group => group.get('question_statement').reset())
             this.questionAnswer.controls.forEach(group => group.get('ans_desc').reset())
+
+            this.questionAnswer.controls.forEach(group => group.get('question_statement_hindi').reset())
+            this.questionAnswer.controls.forEach(group => group.get('answer_hindi').reset())
+            this.questionAnswer.controls.forEach(group => group.get('ans_desc_hindi').reset())
+
+            
+
+
             this.addedQuestion = event.body
 
             alert(this.addedQuestion)
@@ -314,7 +303,7 @@ export class AddpreviousyeartestComponent implements OnInit {
   }
 
   goBack() {
-    location.reload()
+    this.router.navigate(['/superadmin/previousyeartest'])
   }
 
 }

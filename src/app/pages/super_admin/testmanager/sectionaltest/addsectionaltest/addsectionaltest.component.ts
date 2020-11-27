@@ -8,12 +8,16 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 @Component({
   selector: 'app-addsectionaltest',
   templateUrl: './addsectionaltest.component.html',
   styleUrls: ['./addsectionaltest.component.scss']
 })
 export class AddsectionaltestComponent implements OnInit {
+  public Editor = ClassicEditor;
   isLinear: boolean = false
   addQuiz: FormGroup
   public addQuizQuestion: FormGroup
@@ -24,7 +28,7 @@ export class AddsectionaltestComponent implements OnInit {
   correctMarks: any
   negativeMarks: any[]
   courseTypeSectionLists: any = []
-  quizId: any = 132
+  quizId: any
 
   shouldSubmit: boolean = false
   quizLists: any = []
@@ -37,44 +41,17 @@ export class AddsectionaltestComponent implements OnInit {
   selValue: any
   showDirectionFeild: boolean = false
   totalQuestion: any
-  dailyQuizId: any = 137
+  dailyQuizId: any = 134
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild("stepper") myStepper: MatStepper;
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['bold']
-      ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
-      },
-    ]
-  };
+  
 
   progress: number = 0
 
 
-  constructor(private service: AddsectionaltestService, private _formbuilder: FormBuilder,  private ngZone: NgZone, private snackbar: MatSnackBar) {
+  constructor(private service: AddsectionaltestService, private _formbuilder: FormBuilder,  private ngZone: NgZone, private snackbar: MatSnackBar,private router:Router) {
     this.service.getSubjectName().subscribe(
       (res) => {
         this.subjectLists = res
@@ -109,12 +86,16 @@ export class AddsectionaltestComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this._formbuilder.group({
-      answer: ['', Validators.required],
+      answer: [''],
       status: [''],
       question_statement: [''],
-      ans_desc: [''],
+      question_statement_hindi: [''],
+      ans_desc: [''],      
       daily_quizId: [''],
-      direction: ['']
+      direction: [''],
+      direction_hindi: [''],
+      answer_hindi:[''],
+      ans_desc_hindi:['']
     });
   }
 
@@ -160,6 +141,7 @@ export class AddsectionaltestComponent implements OnInit {
     }
     else {
       console.log(this.addQuiz.value)
+      //return false
       this.service.addsectionalLengthQuiz(this.addQuiz.value).subscribe((event: HttpEvent<any>) => {
         switch (event.type) {
           case HttpEventType.Sent:
@@ -195,13 +177,13 @@ export class AddsectionaltestComponent implements OnInit {
       alert("Please Add All The Answer Feilds")
     }
 
-    else if(!answer_descriptions) {
-      alert("Please Add Answer Descriptions")
-    }
+    // else if(!answer_descriptions) {
+    //   alert("Please Add Answer Descriptions")
+    // }
 
-    else if(!question_statement) {
-      alert("Please Add Question Statement")
-    }
+    // else if(!question_statement) {
+    //   alert("Please Add Question Statement")
+    // }
 
     // else if(this.showDirectionFeild && !direction) {
     //   alert("Please Add Question Direction")
@@ -286,7 +268,7 @@ export class AddsectionaltestComponent implements OnInit {
   }
 
   goBack(){
-    location.reload()
+    this.router.navigate(['/superadmin/sectionaltest'])
   }
 
 }

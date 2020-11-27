@@ -2,66 +2,975 @@
 background-size: cover;
 position: relative;
 border-radius: 0;
-color: #fff;">
+color: #fff;" id="page-header">
     <div class="page-block">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <div class="page-title">
                         <h5 class="m-b-10">Dashboard</h5>
-                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                        <p class="m-b-0" style="color: #fff;">Welcome to Avision Admin Panel</p>
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    Home / <a [routerLink]="['/dashboard']" style="color:#fff">Dashboard</a>
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Dashbaord
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div class="container-fluid page-wrapper">
-    <section class="seles-section">
-        <mat-card>
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-xl-3 col-md-6 col-lg-3 col-8 mx-auto  m-t-10 m-b-10">
-                        <h6 class="text-center">Daily Sales</h6>
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                            </div>
-                        </div>
-                        <h5 class="text-center"> <i class="fa fa-inr"></i> 16524</h5>
-                    </div>
 
-                    <div class="col-xl-3 col-md-6 col-lg-3 col-8 mx-auto  m-t-10 m-b-10">
-                        <h6 class="text-center">Weekly Sales</h6>
-                        <div class="row">
-                            <div class="col-8 mx-auto">
-                            </div>
+<section class="seles-section" style="margin-bottom: 90px;">
+    <div class="container-fluid">
+        <div class="sales-report">
+            <div class="row">
+                <div class="col-10 col-md-6 col-lg-6 col-xl-3 mx-auto">
+                    <div class="card card-success">
+                        <div class="card-body pb-4 px-4 pt-4">
+                            <h5 class="mb-1">{{studentCount}} </h5>
+                            <span>TOTAL CANDIDATE</span>
+                            <mat-icon>supervisor_account</mat-icon>
                         </div>
-                        <h5 class="text-center"> <i class="fa fa-inr"></i> 16524</h5>
-                    </div>
 
-                    <div class="col-xl-3 col-md-6 col-lg-3 col-8 mx-auto  m-t-10 m-b-10">
-                        <h6 class="text-center">Monthly Sales</h6>
-                        <div class="row">
-                            <div class="col-8 mx-auto">
+                        <div class="card-footer text-muted">
+                            <div class="chart-wrapper" style="width:100%">
+                                <span class="peity-line" data-width="100%"
+                                    style="display: none;">6,2,8,4,3,8,4,3,6,5,9,2</span><svg class="peity" height="100"
+                                    width="100%">
+                                    <polygon fill="rgba(32, 222, 166, 1)"
+                                        points="0 99.5 0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5 400 99.5">
+                                    </polygon>
+                                    <polyline fill="none"
+                                        points="0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5"
+                                        stroke="rgb(70, 255, 200)" stroke-width="1" stroke-linecap="square">
+                                    </polyline>
+                                </svg>
                             </div>
                         </div>
-                        <h5 class="text-center"> <i class="fa fa-inr"></i> 16524</h5>
                     </div>
+                </div>
 
-                    <div class="col-xl-3 col-md-6 col-lg-3 col-8 mx-auto  m-t-10 m-b-10">
-                        <h6 class="text-center">Yearly Sales</h6>
-                        <div class="row">
-                            <div class="col-8 mx-auto">
+                <div class="col-10 col-md-6 col-lg-3 mx-auto">
+                    <div class="card card-primary">
+                        <div class="card-body pb-4 px-4 pt-4">
+                            <h5 class="mb-1">{{questionCount}}</h5>
+                            <span>TOTAL QUESTION</span>
+                            <mat-icon>help_outline</mat-icon>
+                        </div>
+
+                        <div class="card-footer text-muted">
+                            <div class="chart-wrapper" style="width:100%">
+                                <span class="peity-line" data-width="100%"
+                                    style="display: none;">6,2,8,4,3,8,4,3,6,5,9,2</span><svg class="peity" height="100"
+                                    width="100%">
+                                    <polygon fill="rgba(58, 122, 254, 1)"
+                                        points="0 109.5 0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5 400 99.5">
+                                    </polygon>
+                                    <polyline fill="none"
+                                        points="0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5"
+                                        stroke="rgb(70, 255, 200)" stroke-width="1" stroke-linecap="square">
+                                    </polyline>
+                                </svg>
                             </div>
                         </div>
-                        <h5 class="text-center"> <i class="fa fa-inr"></i> 16524</h5>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-6 col-lg-3 mx-auto">
+                    <div class="card card-success">
+                        <div class="card-body pb-4 px-4 pt-4">
+                            <h5 class="mb-1">{{testCount}}</h5>
+                            <span>TOTAL TEST</span>
+                            <mat-icon>pending_actions</mat-icon>
+                        </div>
+
+                        <div class="card-footer text-muted">
+                            <div class="chart-wrapper" style="width:100%">
+                                <span class="peity-line" data-width="100%"
+                                    style="display: none;">6,2,8,4,3,8,4,3,6,5,9,2</span><svg class="peity" height="100"
+                                    width="100%">
+                                    <polygon fill="rgba(32, 222, 166, 1)"
+                                        points="0 99.5 0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5 400 99.5">
+                                    </polygon>
+                                    <polyline fill="none"
+                                        points="0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5"
+                                        stroke="rgb(70, 255, 200)" stroke-width="1" stroke-linecap="square">
+                                    </polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-6 col-lg-3 mx-auto">
+                    <div class="card card-primary">
+                        <div class="card-body pb-4 px-4 pt-4">
+                            <h5 class="mb-1">{{productCount}}</h5>
+                            <span>TOTAL PRODUCT</span>
+                            <mat-icon>file_copy</mat-icon>
+                        </div>
+
+                        <div class="card-footer text-muted">
+                            <div class="chart-wrapper" style="width:100%">
+                                <span class="peity-line" data-width="100%"
+                                    style="display: none;">6,2,8,4,3,8,4,3,6,5,9,2</span><svg class="peity" height="100"
+                                    width="100%">
+                                    <polygon fill="rgba(58, 122, 254, 1)"
+                                        points="0 99.5 0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5 400 99.5">
+                                    </polygon>
+                                    <polyline fill="none"
+                                        points="0 33.5 36.36363636363637 77.5 72.72727272727273 11.5 109.0909090909091 55.5 145.45454545454547 66.5 181.81818181818184 11.5 218.1818181818182 55.5 254.54545454545456 66.5 290.90909090909093 33.5 327.2727272727273 44.5 363.6363636363637 0.5 400.00000000000006 77.5"
+                                        stroke="rgb(70, 255, 200)" stroke-width="1" stroke-linecap="square">
+                                    </polyline>
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </mat-card>
-    </section>
+        </div>
 
-</div>
+        <div class="row py-3">
+            <div class="col-12 col-lg-3 col-md-12 order-2" id="sticky-sidebar">
+                <div class="">
+                    <div class="nav flex-column">
+                        <div class="card bg-primary text-white">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <div class="card-header ">
+                                <h4 class="card-title text-white">OUR PRODUCTS</h4>
+                                <input class="form-control" type="text" name="search" [(ngModel)]="searchText"
+                                    autocomplete="off" placeholder="&#61442; Searching by Product Name....">
+                            </div>
+                            <div class="card-body" style="max-height: 350px; overflow-y: auto;">
+
+                                <div class="widget-media">
+                                    <ul class="timeline">
+                                        <li *ngFor="let product of allProduct|  filter: searchText">
+                                            <div class="timeline-panel">
+
+                                                <div class="media-body">
+                                                    <h5 class="mb-1 text-white"
+                                                        [innerHTML]="removeChar(product.product_name)"></h5>
+                                                    <small class="d-block">Start Date - {{product.created_date}}</small>
+                                                </div>
+                                                <mat-icon>edit</mat-icon>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header   sticky-top">
+                            <h4 class="card-title">Timeline</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="DZ_W_TimeLine1" class="widget-timeline dz-scroll style-1 ps ps--active-y"
+                                style="overflow-y: auto;">
+                                <ul class="timeline">
+                                    <li>
+                                        <div class="timeline-badge primary"></div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>10 minutes ago</span>
+                                            <h6 class="mb-0">Youtube, a video-sharing website <strong
+                                                    class="text-primary">$500</strong>.</h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge info">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>20 minutes ago</span>
+                                            <h6 class="mb-0">New order placed <strong
+                                                    class="text-info">#XF-2356.</strong></h6>
+                                            <p class="mb-0">Quisque a consequat ante Sit...</p>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge danger">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>30 minutes ago</span>
+                                            <h6 class="mb-0">john just buy your product <strong
+                                                    class="text-warning">Sell $250</strong></h6>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="timeline-badge success">
+                                        </div>
+                                        <a class="timeline-panel text-muted" href="#">
+                                            <span>15 minutes ago</span>
+                                            <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                    <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                </div>
+                                <div class="ps__rail-y" style="top: 0px; height: 250px; right: 0px;">
+                                    <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 139px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-9 col-md-12" id="main">
+                <section class="sales-section-admin">
+                    <!--row-->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="card" style="max-height: 400px; overflow-y: auto;">
+                                <div class="card-header   sticky-top">
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h4 class="card-title">Recent Payments Queue</h4>
+                                        </div>
+
+                                        <div class="col-12 col-md-6">
+                                            <input class="form-control float-right" type="text" name="search"
+                                                [(ngModel)]="searchStudent" autocomplete="off"
+                                                placeholder="&#61442; Searching by Student Name....">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-responsive-sm mb-0 table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+
+                                                    <th><strong>NAME</strong></th>
+                                                    <th>Product</th>
+                                                    <th><strong>Price.</strong></th>
+                                                    <th><strong>DATE</strong></th>
+                                                    <th><strong>STATUS</strong></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let order of sortData|  filter: searchStudent">
+
+
+                                                    <td>{{order.user_name}}</td>
+                                                    <td [innerHTML]="removeProductChar(order.product_name)"></td>
+                                                    <td>Rs. {{order.product_price}}</td>
+                                                    <td>{{order.created_date | date}}</td>
+                                                    <ng-container *ngIf="order.buy_status == '0'">
+                                                        <td class="recent-stats d-flex align-items-center"><i
+                                                                class="fa fa-circle text-danger mr-1"></i>Canceled</td>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="order.buy_status == '1'">
+                                                        <td class="recent-stats d-flex align-items-center"><i
+                                                                class="fa fa-circle text-success mr-1"></i>Successful
+                                                        </td>
+                                                    </ng-container>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div id="user-activity" class="card">
+                                <div class="card-header">
+                                    <div style="float: left;">
+                                        <h4 class="card-title">Student Data</h4>
+                                    </div>
+                                    <div class="card-actiont" style="float: right ;">
+                                        <ul class="nav nav-tabs justify-content-end" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#user" role="tab"
+                                                    aria-selected="true">
+                                                    Monthly
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#week" role="tab"
+                                                    aria-selected="false" (click)="getWeekData()">
+                                                    Weekly
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#year" role="tab"
+                                                    aria-selected="false" (click)="getYearData()">
+                                                    Yearly
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade active show" id="user" role="tabpanel">
+                                            <div class="row  float-right">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-6 col-md-6 float-right">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Select Month</mat-label>
+                                                                <mat-select #month
+                                                                    (selectionChange)="getStudentValueByMonth(month.value)"
+                                                                    [(ngModel)]="currentMonth">
+                                                                    <mat-option value="01">
+                                                                        Jan.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="02">
+                                                                        Feb.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="03">
+                                                                        Mar.
+                                                                    </mat-option>
+                                                                    <mat-option value="04">
+                                                                        Apr.
+                                                                    </mat-option>
+                                                                    <mat-option value="05">
+                                                                        May.
+                                                                    </mat-option>
+                                                                    <mat-option value="06">
+                                                                        June.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="07">
+                                                                        July.
+                                                                    </mat-option>
+                                                                    <mat-option value="08">
+                                                                        Aug.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="09">
+                                                                        Sep.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="10">
+                                                                        Oct.
+                                                                    </mat-option>
+
+                                                                    <mat-option value="11">
+                                                                        Nov.
+                                                                    </mat-option>
+                                                                    <mat-option value="12">
+                                                                        Dec.
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+
+                                                        <div class="col-6 col-md-6 float-right">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-label>Select Year</mat-label>
+                                                                <mat-select #year [(ngModel)]="currentYear"
+                                                                    (selectionChange)="getStudentValueByYear(year.value)">
+                                                                    <mat-option value="2018">
+                                                                        2018
+                                                                    </mat-option>
+
+                                                                    <mat-option value="2019">
+                                                                        2019
+                                                                    </mat-option>
+
+                                                                    <mat-option value="2020">
+                                                                        2020
+                                                                    </mat-option>
+
+                                                                    <mat-option value="2021">
+                                                                        2021
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div style="display: block">
+                                                <canvas *ngIf="showCanvas" baseChart [datasets]="barChartData"
+                                                    [labels]="barChartLabels" [options]="barChartOptions"
+                                                    [plugins]="barChartPlugins" [legend]="barChartLegend"
+                                                    [chartType]="barChartType" [colors]="colors">
+                                                </canvas>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="week" role="tabpanel"
+                                            aria-labelledby="profile-tab">
+
+                                            <mat-form-field class="example-form-field float-right" appearance="outline">
+                                                <mat-label>Select Week</mat-label>
+                                                <mat-date-range-input [formGroup]="campaignOne"
+                                                    [rangePicker]="campaignOnePicker"
+                                                    [comparisonStart]="campaignOne.value.start"
+                                                    [comparisonEnd]="campaignOne.value.end">
+                                                    <input matStartDate placeholder="Start date" formControlName="start"
+                                                        #start (dateChange)="selectStartDate(start.value)">
+                                                    <input matEndDate #end placeholder="End date"
+                                                        (dateChange)="selectStartDate(start.value)"
+                                                        formControlName="end">
+                                                </mat-date-range-input>
+                                                <mat-datepicker-toggle matSuffix [for]="campaignOnePicker">
+                                                </mat-datepicker-toggle>
+                                                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                                            </mat-form-field>
+
+                                            <ng-container *ngIf="barChartWeekData.length > 0">
+                                                <canvas baseChart [datasets]="barChartWeekData"
+                                                    [labels]="barChartWeekLabels" [options]="barChartOptions"
+                                                    [plugins]="barChartPlugins" [legend]="barChartLegend"
+                                                    [chartType]="barChartType" [colors]="colors">
+                                                </canvas>
+                                            </ng-container>
+
+                                        </div>
+
+                                        <div class="tab-pane fade" id="year" role="tabpanel"
+                                            aria-labelledby="profile-tab">
+                                            <div class="col-12 float-right">
+                                                <mat-form-field appearance="outline" class="float-right">
+                                                    <mat-label>Select Year</mat-label>
+                                                    <mat-select #selectyear [(ngModel)]="currentYear"
+                                                        (selectionChange)="getStudentValueByOnlyYear(selectyear.value)">
+                                                        <mat-option value="2018">
+                                                            2018
+                                                        </mat-option>
+
+                                                        <mat-option value="2019">
+                                                            2019
+                                                        </mat-option>
+
+                                                        <mat-option value="2020">
+                                                            2020
+                                                        </mat-option>
+
+                                                        <mat-option value="2021">
+                                                            2021
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <ng-container *ngIf="barChartYearData.length > 0">
+                                                <canvas baseChart [datasets]="barChartYearData"
+                                                    [labels]="barChartYearLabels" [options]="barChartOptions"
+                                                    [plugins]="barChartPlugins" [legend]="barChartLegend"
+                                                    [chartType]="barChartType" [colors]="colors">
+                                                </canvas>
+                                            </ng-container>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <!--col-12-->
+                    </div>
+                    <!--row-->
+                    <div class="row">
+                        
+                    </div>                    
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div id="user-activity" class="card">
+                    <div class="card-header">
+                        <div style="float: left;">
+                            <h4 class="card-title">Live Class Analysic</h4>
+                        </div>
+                        <div class="card-actiont" style="float: right ;">
+                            <ul class="nav nav-tabs justify-content-end" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#alldougnut"
+                                        role="tab" aria-selected="true" (click)="getDougnutallData()">
+                                        All
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#monthlydougnut" role="tab"
+                                        aria-selected="true" (click)="getDougnutMonthlyData()">
+                                        Monthly
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#dougnutweek" role="tab"
+                                        aria-selected="false" (click)="getDougnutWeekData()">
+                                        Weekly
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#yearDougnut" role="tab"
+                                        aria-selected="false" (click)="getDougnutYearData()">
+                                        Yearly
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body"  style="min-height: 40vh;">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="alldougnut" role="tabpanel">
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutChartData"
+                                                [labels]="doughnutChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--tab-pane-->
+                            <div class="tab-pane fade" id="monthlydougnut" role="tabpanel"
+                                style="min-height: 40vh;">
+                                <div class="row  float-right">
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 col-md-6 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Month</mat-label>
+                                                    <mat-select #dougnutmonth
+                                                        (selectionChange)="getStudentDougnutValueByMonth(dougnutmonth.value)"
+                                                        [(ngModel)]="currentDougnutMonth">
+                                                        <mat-option value="01">
+                                                            Jan.
+                                                        </mat-option>
+
+                                                        <mat-option value="02">
+                                                            Feb.
+                                                        </mat-option>
+
+                                                        <mat-option value="03">
+                                                            Mar.
+                                                        </mat-option>
+                                                        <mat-option value="04">
+                                                            Apr.
+                                                        </mat-option>
+                                                        <mat-option value="05">
+                                                            May.
+                                                        </mat-option>
+                                                        <mat-option value="06">
+                                                            June.
+                                                        </mat-option>
+
+                                                        <mat-option value="07">
+                                                            July.
+                                                        </mat-option>
+                                                        <mat-option value="08">
+                                                            Aug.
+                                                        </mat-option>
+
+                                                        <mat-option value="09">
+                                                            Sep.
+                                                        </mat-option>
+
+                                                        <mat-option value="10">
+                                                            Oct.
+                                                        </mat-option>
+
+                                                        <mat-option value="11">
+                                                            Nov.
+                                                        </mat-option>
+                                                        <mat-option value="12">
+                                                            Dec.
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-6 col-md-6 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Year</mat-label>
+                                                    <mat-select #dougnutyear
+                                                        [(ngModel)]="currentDougnutYear"
+                                                        (selectionChange)="getStudentDougnutValueByYear(dougnutyear.value)">
+                                                        <mat-option value="2018">
+                                                            2018
+                                                        </mat-option>
+
+                                                        <mat-option value="2019">
+                                                            2019
+                                                        </mat-option>
+
+                                                        <mat-option value="2020">
+                                                            2020
+                                                        </mat-option>
+
+                                                        <mat-option value="2021">
+                                                            2021
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutChartData"
+                                                [labels]="doughnutChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tab-pane-->
+
+                            <div class="tab-pane fade" id="yearDougnut" role="tabpanel">
+                                <div class="col-12 float-right">
+                                    <mat-form-field appearance="outline" class="float-right">
+                                        <mat-label>Select Year</mat-label>
+                                        <mat-select #selectdougnutyear [(ngModel)]="currentYear"
+                                            (selectionChange)="getStudentDougnutValueByOnlyYear(selectdougnutyear.value)">
+                                            <mat-option value="2018">
+                                                2018
+                                            </mat-option>
+
+                                            <mat-option value="2019">
+                                                2019
+                                            </mat-option>
+
+                                            <mat-option value="2020">
+                                                2020
+                                            </mat-option>
+
+                                            <mat-option value="2021">
+                                                2021
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutChartData"
+                                                [labels]="doughnutChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--tab-pane-->
+
+
+                            <div class="tab-pane fade" id="dougnutweek" role="tabpanel">
+
+                                <mat-form-field class="example-form-field float-right" appearance="outline">
+                                    <mat-label>Select Week</mat-label>
+                                    <mat-date-range-input [formGroup]="campaignTwo"
+                                        [rangePicker]="campaignTwoPicker"
+                                        [comparisonStart]="campaignTwo.value.start"
+                                        [comparisonEnd]="campaignTwo.value.end">
+                                        <input matStartDate placeholder="Start date" formControlName="start"
+                                            #dougnutstart
+                                            (dateChange)="selectDougnutStartDate(dougnutstart.value)">
+                                        <input matEndDate #end placeholder="End date"
+                                            (dateChange)="selectDougnutStartDate(dougnutstart.value)"
+                                            formControlName="end">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="campaignTwoPicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-date-range-picker #campaignTwoPicker></mat-date-range-picker>
+                                </mat-form-field>
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutChartData"
+                                                [labels]="doughnutChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tab-pane-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--col-12-->
+
+            <div class="col-12 col-md-6">
+                <div id="user-activity" class="card">
+                    <div class="card-header">
+                        <div style="float: left;">
+                            <h4 class="card-title">Video Product Analysic</h4>
+                        </div>
+                        <div class="card-actiont" style="float: right ;">
+                            <ul class="nav nav-tabs justify-content-end" role="tablist">
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#allvideodougnut"
+                                        role="tab" aria-selected="true" (click)="getDouVideognutallData()">
+                                        All
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#monthlvideoydougnut" role="tab"
+                                        aria-selected="true" (click)="getDougnutVideoMonthlyData()">
+                                        Monthly
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#dougnuvideotweek" role="tab"
+                                        aria-selected="false" (click)="getDougnutWeekData2()">
+                                        Weekly
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#yearvideoDougnut" role="tab"
+                                        aria-selected="false" (click)="getDougnutYearData()">
+                                        Yearly
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body"  style="min-height: 40vh;">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="allvideodougnut" role="tabpanel">
+
+                                <div>
+                                    <div *ngIf="doughnutLiveClassChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutLiveClassChartData"
+                                                [labels]="doughnutLiveClassChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--tab-pane-->
+                            <div class="tab-pane fade" id="monthlvideoydougnut" role="tabpanel"
+                                style="min-height: 40vh;">
+                                <div class="row  float-right">
+                                    <div class="col-12 col-md-12">
+                                        <div class="row">
+                                            <div class="col-6 col-md-6 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Month</mat-label>
+                                                    <mat-select #dougnutmonth
+                                                        (selectionChange)="getStudentDougnutValueByMonth(dougnutmonth.value)"
+                                                        [(ngModel)]="currentDougnutMonth">
+                                                        <mat-option value="01">
+                                                            Jan.
+                                                        </mat-option>
+
+                                                        <mat-option value="02">
+                                                            Feb.
+                                                        </mat-option>
+
+                                                        <mat-option value="03">
+                                                            Mar.
+                                                        </mat-option>
+                                                        <mat-option value="04">
+                                                            Apr.
+                                                        </mat-option>
+                                                        <mat-option value="05">
+                                                            May.
+                                                        </mat-option>
+                                                        <mat-option value="06">
+                                                            June.
+                                                        </mat-option>
+
+                                                        <mat-option value="07">
+                                                            July.
+                                                        </mat-option>
+                                                        <mat-option value="08">
+                                                            Aug.
+                                                        </mat-option>
+
+                                                        <mat-option value="09">
+                                                            Sep.
+                                                        </mat-option>
+
+                                                        <mat-option value="10">
+                                                            Oct.
+                                                        </mat-option>
+
+                                                        <mat-option value="11">
+                                                            Nov.
+                                                        </mat-option>
+                                                        <mat-option value="12">
+                                                            Dec.
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-6 col-md-6 float-right">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select Year</mat-label>
+                                                    <mat-select #dougnutyear
+                                                        [(ngModel)]="currentDougnutYear"
+                                                        (selectionChange)="getStudentDougnutValueByYear(dougnutyear.value)">
+                                                        <mat-option value="2018">
+                                                            2018
+                                                        </mat-option>
+
+                                                        <mat-option value="2019">
+                                                            2019
+                                                        </mat-option>
+
+                                                        <mat-option value="2020">
+                                                            2020
+                                                        </mat-option>
+
+                                                        <mat-option value="2021">
+                                                            2021
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutLiveClassChartData"
+                                            [labels]="doughnutLiveClassChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+                            <!--tab-pane-->
+
+                            <div class="tab-pane fade" id="yearvideoDougnut" role="tabpanel">
+                                <div class="col-12 float-right">
+                                    <mat-form-field appearance="outline" class="float-right">
+                                        <mat-label>Select Year</mat-label>
+                                        <mat-select #selectdougnutyear [(ngModel)]="currentYear"
+                                            (selectionChange)="getStudentDougnutValueByOnlyYear(selectdougnutyear.value)">
+                                            <mat-option value="2018">
+                                                2018
+                                            </mat-option>
+
+                                            <mat-option value="2019">
+                                                2019
+                                            </mat-option>
+
+                                            <mat-option value="2020">
+                                                2020
+                                            </mat-option>
+
+                                            <mat-option value="2021">
+                                                2021
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutLiveClassChartData"
+                                                [labels]="doughnutLiveClassChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--tab-pane-->
+
+
+                            <div class="tab-pane fade" id="dougnuvideotweek" role="tabpanel">
+                                <mat-form-field class="example-form-field float-right" appearance="outline">
+                                    <mat-label>Select Week 2</mat-label>
+                                    <mat-date-range-input [formGroup]="campaignThree"
+                                        [rangePicker]="campaignThreePicker"
+                                        [comparisonStart]="campaignThree.value.start"
+                                        [comparisonEnd]="campaignThree.value.end">
+                                        <input matStartDate placeholder="Start date" formControlName="start"
+                                            #dougnutstart
+                                            (dateChange)="selectDougnutStartDate2(dougnutstart.value)">
+                                        <input matEndDate #end placeholder="End date"
+                                            (dateChange)="selectDougnutStartDate2(dougnutstart.value)"
+                                            formControlName="end">
+                                    </mat-date-range-input>
+                                    <mat-datepicker-toggle matSuffix [for]="campaignThreePicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-date-range-picker #campaignThreePicker></mat-date-range-picker>
+                                </mat-form-field>
+
+                                <div>
+                                    <div *ngIf="doughnutChartData.length > 0">
+                                        <div style="display: block">
+                                            <canvas baseChart [data]="doughnutLiveClassChartData"
+                                                [labels]="doughnutLiveClassChartLabels"
+                                                [chartType]="doughnutChartType"
+                                                [colors]="doughnutChartColors" [options]="pieChartOptions"
+                                                [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--tab-pane-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

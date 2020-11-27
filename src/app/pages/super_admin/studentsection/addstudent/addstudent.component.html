@@ -1,0 +1,121 @@
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+    background-size: cover;
+    position: relative;
+    border-radius: 0;
+    color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Student
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="video-course-section" id="video-course-section">
+  <div class="container">
+    <mat-card class="p-t-5">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">ADD NEW STUDENT</h1>
+        </div>
+        <div class="col-12">
+          <mat-divider></mat-divider>
+          <br>
+          <div class="col-12 col-md-8 mx-auto">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="showPhoneEmailError">
+              <strong>Holy Admin!</strong> {{message}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <form [formGroup]="student" (ngSubmit)="submitStudentDetails()">
+        <div class="row">
+          <div class="col-12 col-md-8 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Add Student Name</mat-label>
+              <input matInput placeholder="Student Name..." formControlName="student_name">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-8 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Add Student E-mail Id</mat-label>
+              <input type="email" matInput placeholder="Student Name..." formControlName="student_email">
+              <mat-error>{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+
+            {{value}}
+          </div>
+
+          <div class="col-12 col-md-8 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Add Student Phone No</mat-label>
+              <input type="number" maxlength="10" matInput placeholder="Student Name..."
+                formControlName="student_phone">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-8 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter Student password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="student_password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-8 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Re-Enter Student password</mat-label>
+              <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="student_re_password">
+              <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide2">
+                <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-10 col-md-6 mx-auto">
+            <img [src]="src" class="img-fluid" />
+            <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+              accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="student_img" />
+          </div>
+
+        </div>
+
+        <div class="row  p-t-5">
+          <div class="col-10 col-md-6 mx-auto p-t-5">
+            <br> <br>
+            <button type="submit" mat-raised-button class="btn-success btn-block">Add Student Information</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</section>

@@ -1,66 +1,32 @@
+import { Location } from '@angular/common';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { EditfulllengthtestquestionService } from './editfulllengthtestquestion.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 @Component({
   selector: 'app-editfulllengthtestquestion',
   templateUrl: './editfulllengthtestquestion.component.html',
   styleUrls: ['./editfulllengthtestquestion.component.scss']
 })
+
+
+
+
+
+
 export class EditfulllengthtestquestionComponent implements OnInit {
-   progress: number = 0
+  public Editor = ClassicEditor;
+  progress: number = 0
   public addDailyQuizQuestion: FormGroup
   public questionAnswer: FormArray;
   selValue: number;
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    uploadUrl: 'v1/img',
-    uploadWithCredentials: false,
-    sanitize: true,
-    toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
-  };
+  private loader;
   dailyQuizId: any = 5
   addedQuestion: any;
   shouldSubmit: boolean = false;
@@ -72,7 +38,7 @@ export class EditfulllengthtestquestionComponent implements OnInit {
   emptyDirection: String = ''
 
 
-  constructor(private service: EditfulllengthtestquestionService, private _formbuilder: FormBuilder, private route: ActivatedRoute, private snackbar: MatSnackBar) { 
+  constructor(private service: EditfulllengthtestquestionService, private _formbuilder: FormBuilder, private route: ActivatedRoute, private snackbar: MatSnackBar,private router : Router,private location: Location) { 
     this.addDailyQuizQuestion = this._formbuilder.group({
       questionAnswer: this._formbuilder.array([])
     });
@@ -89,6 +55,7 @@ export class EditfulllengthtestquestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getQuestionById(this.questionId).subscribe((res) => {
+     
       this.answerLists = res     
       this.totalQuestionOption = this.answerLists.length     
       this.showArray = true    
@@ -101,7 +68,7 @@ export class EditfulllengthtestquestionComponent implements OnInit {
       }
 
       this.questionAnswer = this.addDailyQuizQuestion.get('questionAnswer') as FormArray;
-      for (var i = 0; i <= 3; i++) {
+      for (var i = 0; i <= this.answerLists.length; i++) {
         this.questionAnswer.push(this.createAddress(this.answerLists[i]));
       }
 
@@ -111,16 +78,23 @@ export class EditfulllengthtestquestionComponent implements OnInit {
     })
   }
 
-  createAddress(answerLists): FormGroup {     
-    return this._formbuilder.group({
-      answer: [answerLists.ans, Validators.required],
-      status: [answerLists.status],
-      question_statement: [answerLists.question],
-      ans_desc: [answerLists.ans_desc],
-      daily_quizId: [answerLists.quiz_id],
-      daily_questionId: [answerLists.question_id],
-      direction: [answerLists.directions]
-    });
+  createAddress(answerLists): FormGroup { 
+    if(this.showArray) {
+      return this._formbuilder.group({
+        answer: [answerLists.ans],
+        answer_hindi: [answerLists.ans_hindi],
+        status: [answerLists.status],
+        question_statement: [answerLists.question],
+        question_statement_hindi:[answerLists.question_hindi],
+        ans_desc: [answerLists.ans_desc],
+        ans_desc_hindi: [answerLists.ans_desc_hindi],
+        daily_quizId: [answerLists.quiz_id],
+        daily_questionId: [answerLists.question_id],
+        direction: [answerLists.directions],
+        direction_hindi: [answerLists.directions_hindi]
+      });
+    }    
+   
   }
 
   selectCity(index): void {
@@ -133,15 +107,11 @@ export class EditfulllengthtestquestionComponent implements OnInit {
     this.questionAnswer.value[index].status = this.selValue
   }
 
-  submitDailyQuizQuestionAnswer() {
-
-    console.log(this.addDailyQuizQuestion.value)
-
+  submitDailyQuizQuestionAnswer() {  
     var totalqs = this.totalQuestionOption - 1
     var question_statement = this.questionAnswer.controls[0].value.question_statement
     var answer_descriptions = this.questionAnswer.controls[totalqs].value.ans_desc
     var direction = this.questionAnswer.controls[0].value.direction
-    console.log(question_statement, answer_descriptions, totalqs, direction)
 
     // if (this.shouldSubmit) {
 
@@ -149,19 +119,19 @@ export class EditfulllengthtestquestionComponent implements OnInit {
       alert("Please Add All The Answer Feilds")
     }
 
-    else if (!answer_descriptions) {
-      alert("Please Add Answer Descriptions")
-    }
+    // else if (!answer_descriptions) {
+    //   alert("Please Add Answer Descriptions")
+    // }
 
-    else if (!question_statement) {
-      alert("Please Add Question Statement")
-    }
+    // else if (!question_statement) {
+    //   alert("Please Add Question Statement")
+    // }
 
    
     else {
 
       //this.questionAnswer.controls.forEach(group => console.log(group.value.answer))
-      console.log(this.addDailyQuizQuestion.value)
+      
       
       this.service.submitDailyQuizQuestionAnswer(this.addDailyQuizQuestion.value).subscribe((event: HttpEvent<any>) => {
         switch (event.type) {
@@ -200,6 +170,48 @@ export class EditfulllengthtestquestionComponent implements OnInit {
     if(this.showDirectionFeild == false) {     
       this.questionAnswer.controls.forEach(group => group.get('direction').patchValue(' '))      
     }
+  }
+
+  back(){
+
+    this.location.back()
+  }
+
+  addNewRow() { 
+    this.answerLists.push({answer: '', status:0, question_statement: '', ans_desc: '', direction: '', question_statement_hindi: '', direction_hindi: '', answer_hindi: '', ans_desc_hindi: ''})
+    this.questionAnswer.push(this._formbuilder.group({
+      answer: [''],
+      status: [0],
+      question_statement: [''],
+      ans_desc: [''],
+      direction: [''],
+      question_statement_hindi: [''],
+      direction_hindi: [''],
+      answer_hindi: [''],
+      ans_desc_hindi: ['']
+    }));
+  }
+
+
+  upload(loader) {
+    return loader.file
+          .then( file => new Promise( ( resolve, reject ) => {
+                var myReader= new FileReader();
+                myReader.onloadend = (e) => {
+                   resolve({ default: myReader.result });
+                }
+
+                myReader.readAsDataURL(file);
+          } ) );
+ };
+
+
+  onReady(eventData) {
+    eventData.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+      console.log('loader : ', loader)
+      console.log(btoa(loader.file));
+      return this.upload(loader);
+    };
   }
 
 }

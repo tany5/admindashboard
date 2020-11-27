@@ -1,0 +1,78 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Add Chapter Name</h1>
+            </div>
+            <form [formGroup]="addProductCategory" (ngSubmit)="addSubchapter()">
+                <div class="row">
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Video Chapter</mat-label>
+                            <mat-select #videosubject formControlName="videosubject"
+                                (selectionChange)="onSubjectSelect(videosubject.value)" [(ngModel)]="type_id">
+                                <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+                                    {{subject.type_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Video Chapter</mat-label>
+                            <mat-select formControlName="chapter" [(ngModel)]="chapter_id">
+                                <mat-option *ngFor="let chapter of chapterLists" [value]="chapter.chapter_id">
+                                    {{chapter.chapter_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Add Sub Chapter Name</mat-label>
+                            <input matInput formControlName="sub_chapter_name" [(ngModel)]="sub_chapter_name">
+                        </mat-form-field>
+                    </div>
+                    <input type="hidden" formControlName="product_id" [(ngModel)]="product_id"> 
+                </div>
+                <div class="row">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <button mat-raised-button type="submit" class="btn-success btn-block">Edit Sub Chapter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

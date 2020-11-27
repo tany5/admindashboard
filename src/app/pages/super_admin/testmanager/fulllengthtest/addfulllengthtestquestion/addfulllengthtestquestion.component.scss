@@ -162,3 +162,7 @@ input[type="checkbox"], input[type="radio"] {
     display: flex;
     align-items: center;
 }
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 300px;
+}

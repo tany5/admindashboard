@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { AddfulllengthtestquestionService } from './addfulllengthtestquestion.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-addfulllengthtestquestion',
   templateUrl: './addfulllengthtestquestion.component.html',
@@ -13,34 +15,36 @@ import { AddfulllengthtestquestionService } from './addfulllengthtestquestion.se
 })
 export class AddfulllengthtestquestionComponent implements OnInit {
 
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    toolbarHiddenButtons: [
-      ['bold']
-    ],
-    customClasses: [
-      {
-        name: "quote",
-        class: "quote",
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: "titleText",
-        class: "titleText",
-        tag: "h1",
-      },
-    ]
-  };
+  public Editor = ClassicEditor;
+
+  // editorConfig: AngularEditorConfig = {
+  //   editable: true,
+  //   spellcheck: true,
+  //   height: '15rem',
+  //   minHeight: '5rem',
+  //   placeholder: 'Enter text here...',
+  //   translate: 'no',
+  //   defaultParagraphSeparator: 'p',
+  //   defaultFontName: 'Arial',
+  //   toolbarHiddenButtons: [
+  //     ['bold']
+  //   ],
+  //   customClasses: [
+  //     {
+  //       name: "quote",
+  //       class: "quote",
+  //     },
+  //     {
+  //       name: 'redText',
+  //       class: 'redText'
+  //     },
+  //     {
+  //       name: "titleText",
+  //       class: "titleText",
+  //       tag: "h1",
+  //     },
+  //   ]
+  // };
 
   public addQuizQuestion: FormGroup
   public questionAnswer: FormArray;
@@ -59,7 +63,7 @@ export class AddfulllengthtestquestionComponent implements OnInit {
   totalQuestion: any
   remainQuestion: any
 
-  constructor(private service: AddfulllengthtestquestionService, private _formbuilder: FormBuilder, private ngZone: NgZone, private router: Router, private route: ActivatedRoute) {
+  constructor(private service: AddfulllengthtestquestionService, private _formbuilder: FormBuilder, private ngZone: NgZone, private router: Router, private route: ActivatedRoute,private location: Location) {
 
     this.addQuizQuestion = this._formbuilder.group({
       questionAnswer: this._formbuilder.array([])
@@ -104,17 +108,24 @@ export class AddfulllengthtestquestionComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this._formbuilder.group({
-      answer: ['', Validators.required],
+      answer: [''],
       status: [''],
       question_statement: [''],
       ans_desc: [''],
       daily_quizId: [''],
-      direction: ['']
+      direction: [''],
+      question_statement_hindi:[''],
+      direction_hindi: [''],
+      answer_hindi: [''],
+      ans_desc_hindi: ['']
+
     });
   }
 
 
   addQuizquestion() {
+    console.log(this.addQuizQuestion.value);
+    
     var totalqs = this.totalQuestionOption - 1
     var question_statement = this.questionAnswer.controls[0].value.question_statement
     var answer_descriptions = this.questionAnswer.controls[totalqs].value.ans_desc
@@ -126,13 +137,13 @@ export class AddfulllengthtestquestionComponent implements OnInit {
       alert("Please Add All The Answer Feilds")
     }
 
-    else if (!answer_descriptions) {
-      alert("Please Add Answer Descriptions")
-    }
+    // else if (!answer_descriptions) {
+    //   alert("Please Add Answer Descriptions")
+    // }
 
-    else if (!question_statement) {
-      alert("Please Add Question Statement")
-    }
+    // else if (!question_statement) {
+    //   alert("Please Add Question Statement")
+    // }
 
     // else if (this.showDirectionFeild && !direction) {
     //   alert("Please Add Question Direction")
@@ -162,15 +173,19 @@ export class AddfulllengthtestquestionComponent implements OnInit {
           case HttpEventType.Response:
 
             this.questionAnswer.controls.forEach(group => group.get('answer').reset())
+            this.questionAnswer.controls.forEach(group => group.get('answer_hindi').reset())
             this.questionAnswer.controls.forEach(group => group.get('status').reset())
             this.questionAnswer.controls.forEach(group => group.get('question_statement').reset())
+            this.questionAnswer.controls.forEach(group => group.get('question_statement_hindi').reset())
             this.questionAnswer.controls.forEach(group => group.get('ans_desc').reset())
+            this.questionAnswer.controls.forEach(group => group.get('ans_desc_hindi').reset())
             this.addedQuestion = event.body
-            alert(this.addedQuestion)
+          
             if (this.addedQuestion == '0') {
 
               this.ngZone.run(() => {
-                alert(this.addedQuestion)
+                //this.router.navigate(['/superadmin/editfulllengthtest',this.dailyQuizId])
+                this.location.back()
               });
             }
             else {

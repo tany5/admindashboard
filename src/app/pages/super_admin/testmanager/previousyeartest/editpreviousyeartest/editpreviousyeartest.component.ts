@@ -99,8 +99,7 @@ ngOnInit(): void {
     duration: ['', Validators.required],
     chnageable: ['', Validators.required],
     quiz_id: [''],
-    year: ['', Validators.required],
-    subject: ['', Validators.required]
+    year: ['', Validators.required]
   })
 }
 

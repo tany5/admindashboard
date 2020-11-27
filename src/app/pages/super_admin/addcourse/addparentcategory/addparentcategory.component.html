@@ -6,6 +6,28 @@
   </div>
 </div>
 
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="video-course-section">
   <div class="container">
@@ -85,7 +107,7 @@
 
                  <!-- Progress Column -->
                  <ng-container matColumnDef="categoryname">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category Name </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Parent  Category Name </th>
                     <td mat-cell *matCellDef="let row"> 
                      {{row.category_name}} </td>
                   </ng-container>
@@ -106,10 +128,9 @@
                     <button mat-raised-button color="primary" (click)="edit_quiz(row.sub_category_id )">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-raised-button color="warn" (click)="delete_sub_course(row.sub_category_id , row.courses_name)">
+                    <!-- <button mat-raised-button color="warn" (click)="delete_sub_course(row.sub_category_id , row.sub_category_name)">
                       <mat-icon>clear</mat-icon>
-                    </button>
-    
+                    </button>     -->
                   </td>
                 </ng-container>
     

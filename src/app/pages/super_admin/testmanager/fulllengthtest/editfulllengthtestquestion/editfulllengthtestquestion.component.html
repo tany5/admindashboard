@@ -3,107 +3,159 @@ background-size: cover;
 position: relative;
 border-radius: 0;
 color: #fff;" id="page-header">
-  <div class="page-block">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-md-8">
-          <div class="page-title">
-            <h5 class="m-b-10">Dashboard</h5>
-            <p class="m-b-0">Welcome to Avision Admin Panel</p>
-          </div>
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Full Length Quiz
+                    Question
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 text-right">
-          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Full Length Quiz Question
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 <section class="video-course-section">
-  <div class="container-fluid" *ngIf="showArray">
+    <div class="container-fluid" *ngIf="showArray">
 
-    <div class="row">
-      <ng-container>
-        <div class="col-12 col-md-6">
-          <button type="button" mat-raised-button [ngClass]="showDirectionFeild ? 'btn-danger' : 'btn-success'"
+        <div class="row">
+            <ng-container>
+                <div class="col-12 col-md-6">
+                    <!-- <button type="button" mat-raised-button [ngClass]="showDirectionFeild ? 'btn-danger' : 'btn-success'"
             id="showDirection"
-            (click)="showDirection()">{{ showDirectionFeild == true ? 'Remove Direction' : 'Add Direction' }}</button>
-        </div>
-      </ng-container>
-    </div>
-
-
-
-    <form [formGroup]="addDailyQuizQuestion" (ngSubmit)="submitDailyQuizQuestionAnswer()">
-      <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
-
-        <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
-
-          <div [formGroupName]="i">
-            <div class="row">
-              <div class="col-12">
-                <h1 *ngIf="i == 0">Question</h1>
-                <angular-editor *ngIf="i == 0" formControlName="question_statement" [config]="editorConfig" required>
-                </angular-editor>
-
-                <input type="hidden" *ngIf="i == 0" formControlName="daily_quizId">
-                <input type="hidden" *ngIf="i == 0" formControlName="daily_questionId">
-
-              </div>
-            </div>
-
-            <div class="row" *ngIf="showDirectionFeild">
-              <div class="col-12">
-                <h1 *ngIf="i == 0">Question Direction</h1>
-                <angular-editor *ngIf="i == 0" formControlName="direction" [config]="editorConfig" required>
-                </angular-editor>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12">
-                <h1 class="text-center">Answer Options {{i+1}}</h1>
-              </div>
-              <div class="col-2 col-md-1">
-
-                <div class="control-group">
-                  <label class="text-center">Option</label>
-                  <div class="controls">
-                    <div class="option_box">
-                      <span>{{i+1}}</span>
-                      <input type="hidden" formControlName="status" #status />
-
-                      <input type="hidden" [value]="status.value" />
-
-                      <ng-container *ngIf="status.value == '1'">
-                        <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
-                          name="status" formControlName="status" [value]="status.value" checked="checked" />
-                      </ng-container>
-
-                      <ng-container *ngIf="status.value == '0'">
-                        <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
-                          name="status" formControlName="status" [value]="selValue" />
-                      </ng-container>
-
-                    </div>
-                  </div>
+            (click)="showDirection()">{{ showDirectionFeild == true ? 'Remove Direction' : 'Add Direction' }}</button> -->
                 </div>
-              </div>
-              <div class="col-10">
-                <angular-editor formControlName="answer" [config]="editorConfig" required></angular-editor>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description</h1>
-                <angular-editor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
-                  [config]="editorConfig" required></angular-editor>
-              </div>
-            </div>
-          </div>
-        </ng-container>
-      </section>
-      <button type="submit" mat-raised-button color="primary">Update Question and Answer</button>
-    </form>
-  </div>
+            </ng-container>
+        </div>
+
+
+
+        <form [formGroup]="addDailyQuizQuestion" (ngSubmit)="submitDailyQuizQuestionAnswer()">
+            <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+                <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+                    <div [formGroupName]="i">
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <button type="button" *ngIf="i==0" mat-raised-button class="btn-success float-right"
+                                    (click)="addNewRow()">Add new Row</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">English Question Direction</h1>
+                                <ckeditor *ngIf="i == 0" formControlName="direction" [editor]="Editor" (ready)="onReady($event)">
+                                </ckeditor>
+                            </div>
+
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">Hindi Question Direction</h1>
+                                <ckeditor *ngIf="i == 0" formControlName="direction_hindi" [editor]="Editor">
+                                </ckeditor>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0"> English Question</h1>
+                                <ckeditor *ngIf="i == 0" formControlName="question_statement" [editor]="Editor">
+                                </ckeditor>
+
+                                <input type="hidden" *ngIf="i == 0" formControlName="daily_quizId">
+                                <input type="hidden" *ngIf="i == 0" formControlName="daily_questionId">
+                                <br>
+                            </div>
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">Hindi Question </h1>
+                                <ckeditor *ngIf="i == 0" formControlName="question_statement_hindi" [editor]="Editor">
+                                </ckeditor>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="row no-gutters">
+                                    <div class="col-12">
+                                        <h1 class="text-center">English Answer Options {{i+1}}</h1>
+                                    </div>
+                                    <div class="col-2 col-md-2 col-xl-1">
+
+                                        <div class="controls">
+                                            <div class="option_box">
+                                                <span>{{i+1}}</span>
+                                                <input type="hidden" formControlName="status" #status />
+
+                                                <input type="hidden" [value]="status.value" />
+
+                                                <ng-container *ngIf="status.value == '1'">
+                                                    <input (click)="selectCity(i)" type="radio"
+                                                        class="span12 single_radio" id="city{{i}}" name="status"
+                                                        formControlName="status" [value]="status.value"
+                                                        checked="checked" />
+                                                </ng-container>
+
+                                                <ng-container *ngIf="status.value == '0'">
+                                                    <input (click)="selectCity(i)" type="radio"
+                                                        class="span12 single_radio" id="city{{i}}" name="status"
+                                                        formControlName="status" [value]="selValue" />
+                                                </ng-container>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10 col-10 col-xl-11">
+                                        <ckeditor formControlName="answer" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--row-->
+                            <div class="col-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h1 class="text-center">Hindi Answer Options {{i+1}}</h1>
+                                    </div>
+
+                                    <div class="col-md-12 col-12">
+                                        <ckeditor formControlName="answer_hindi" [editor]="Editor">
+                                        </ckeditor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="row">
+                            <br>
+                            <div class="col-6">
+                                <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description English</h1>
+                                <ckeditor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
+                                    [editor]="Editor"></ckeditor>
+                            </div>
+
+                            <div class="col-6">
+                                <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description Hindi</h1>
+                                <ckeditor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc_hindi"
+                                    [editor]="Editor"></ckeditor>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </ng-container>
+            </section>
+            <button type="submit" mat-raised-button color="primary">Update Question and Answer</button>
+            <button type="button" (click)="back()" class="float-right" mat-raised-button color="warn">Back</button>
+        </form>
+    </div>
 </section>

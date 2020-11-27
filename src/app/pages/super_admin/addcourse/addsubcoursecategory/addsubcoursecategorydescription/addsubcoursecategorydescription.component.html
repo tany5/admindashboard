@@ -1,0 +1,99 @@
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+      background-size: cover;
+      position: relative;
+      border-radius: 0;
+      color: #fff;" id="page-header">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Sub Course Category
+                    Description
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="video-course-section">
+    <div class="container-fluid">
+        <h1 class="text-center">{{sub_category_name}}</h1>
+        <div class="row">
+            <form [formGroup]="addQuizQuestion" (ngSubmit)="addQuizquestion()">
+                <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+                    <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+                        <div class="row">
+                            <br>
+                            <div class="col-12" [formGroupName]="i">
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <button type="button" *ngIf="i==0" mat-raised-button
+                                        class="btn-success float-right" (click)="addNewRow()">Add new Row</button>                                            
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>HEADING</mat-label>
+                                            <input matInput formControlName="heading" [(ngModel)]="innerMeta[i]['page_heading']">
+                                        </mat-form-field>
+                                        <ng-container>
+
+                                        </ng-container>
+                                        <input type="hidden" *ngIf="i==0" formControlName="subcourse_id"
+                                            [(ngModel)]="prodId">
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <ckeditor [editor]="Editor" formControlName="content" [(ngModel)]="innerMeta[i]['page_content']"></ckeditor>
+
+                                        <input type="hidden" formControlName="course_content_id" [(ngModel)]="innerMeta[i]['course_content_id']">
+                                    </div>
+                                </div>
+                                <br>
+                                <button type="button" mat-raised-button class="btn-danger float-right"
+                                    (click)="deleteRow(i, innerMeta[i]['course_content_id'])" *ngIf="questionAnswer.controls.length > 1 && i!=0">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+
+                                <button type="button" mat-raised-button class="btn-success float-right"
+                                    (click)="addNewRowIndex(i)">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                                <br>
+                            </div>
+                            
+                        </div>
+                    </ng-container>
+                </section>
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <button type="submit" mat-raised-button color="primary">Submit Sub Category Content</button>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <button type="button" mat-raised-button class="btn-success float-right"
+                            (click)="addNewRow()">Add new Row</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</section>

@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { AddvideocoursService } from './addvideocours.service'
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 export interface UserData {
@@ -11,15 +14,7 @@ export interface UserData {
   color: string;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+
 
 @Component({
   selector: 'app-addvideocourse',
@@ -31,26 +26,30 @@ const NAMES: string[] = [
 
 export class AddvideocourseComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  displayedColumns: string[] = ['id', 'product_name', 'type_name', 'product_price','product_offer_price','action'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { 
-     // Create 100 users
-     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+  fullLengthQuiz: any = []
 
-     // Assign the data to the data source for the table to render
-     this.dataSource = new MatTableDataSource(users);
+
+  constructor(private service: AddvideocoursService, private router: Router, private snackbar: MatSnackBar ) { 
+
+    this.service.getVideoProduct().subscribe((res)=> {
+      console.log(res)    
+      this.fullLengthQuiz = res['video_product_list']      
+      this.dataSource = new MatTableDataSource(this.fullLengthQuiz);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
   }
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  ngAfterViewInit() {   
   }
 
   applyFilter(event: Event) {
@@ -61,22 +60,31 @@ export class AddvideocourseComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
-
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
-
   
+  
+  edit_quiz(product_id){
+
+    this.router.navigate(['/superadmin/eidtvideocourse', product_id])
+    
+  }
+
+  delete_quiz(product_id, product_name) {
+    var result = confirm(`Are you sure you want to delete ${product_name} ??`)
+    if(result) {
+      this.service.delete_video_product_by_product_id(product_id).subscribe(
+        (res)=> {
+          console.log(res)
+          let snackbarRef = this.snackbar.open(`${product_name} Deleted Successfully !!`, "Close", {
+            duration: 2000
+          })
+          snackbarRef.afterDismissed().subscribe(
+            ()=> {
+              location.reload()            
+          })
+      })
+    }
+        
+  }
 
 
 }

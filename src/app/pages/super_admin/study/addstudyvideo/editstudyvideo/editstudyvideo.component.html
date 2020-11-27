@@ -1,0 +1,93 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Concept
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="video-course-section">
+  <div class="container">
+    <mat-card>
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">UPDATE STUDY VIDEO LECTURE SECTION</h1>
+        </div>
+      </div>
+      <form [formGroup]="concept" (ngSubmit)="submitConceptDetails()">
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field class="example-full-width">
+
+              <input type="text" placeholder="Search Concept" aria-label="Number" matInput [formControl]="myControl"
+                [matAutocomplete]="auto" [(ngModel)]="conceptName">
+              <mat-autocomplete #conceptname autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.study_pdf_concept_name">
+                  {{option.study_pdf_concept_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter Lecture Name</mat-label>
+              <input matInput placeholder="Coupon Code" formControlName="conceptname" [(ngModel)]="lecture_name">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter Video SRC</mat-label>
+              <mat-select formControlName="videotype" [(ngModel)]="vdo_src">
+                <mat-option [value]="0">
+                  Youtube
+                </mat-option>
+                <mat-option [value]="1">
+                  Vimeo
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter Video URL</mat-label>
+              <input matInput placeholder="Coupon Code" formControlName="videourl" [(ngModel)]="study_vdo_url">
+            </mat-form-field>
+            <input type="hidden" formControlName="videoId" [(ngModel)]="prodId">
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 col-md-6 mx-auto">
+            <button mat-raised-button type="submit" class="btn-success btn-block">Update Video Chapter</button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</section>

@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditfulllengthtestComponent implements OnInit {
   addQuiz: FormGroup
-  displayedColumns: string[] = ['id', 'question', 'directions', 'action'];
+  displayedColumns: string[] = ['id', 'question', 'question_hindi', 'directions', 'action'];
   prodId: any
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,8 +44,8 @@ export class EditfulllengthtestComponent implements OnInit {
 
 
     this.service.getQuizQuestion(this.prodId).subscribe((res) => {
+      console.log(res)
       this.fullLengthQuiz = res['all_full_length_quiz_question']
-
       this.dataSource = new MatTableDataSource(this.fullLengthQuiz);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

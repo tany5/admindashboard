@@ -1,0 +1,58 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Video Product
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Add Subject Name</h1>
+            </div>
+            <form [formGroup]="addProductSubject" (ngSubmit)="addparentsubject()">
+                <div class="row">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Enter Subject Name</mat-label>
+                            <input matInput formControlName="subject_name" [(ngModel)]="type_name">
+                        </mat-form-field>
+                    </div>                    
+                </div>
+
+                <input type="text" [(ngModel)]="product_id" formControlName="product_id">
+
+                <div class="row">
+                    <div class="col-10 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Edit Parent
+                            Subject</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

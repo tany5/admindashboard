@@ -7,12 +7,14 @@ import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { AddfulllengthtestService } from './addfulllengthtest.service'
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-addfulllengthtest',
   templateUrl: './addfulllengthtest.component.html',
   styleUrls: ['./addfulllengthtest.component.scss']
 })
 export class AddfulllengthtestComponent implements OnInit {
+  public Editor = ClassicEditor;
  
   @ViewChild("stepper") myStepper: MatStepper;
   addQuiz: FormGroup
@@ -124,12 +126,16 @@ export class AddfulllengthtestComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this._formbuilder.group({
-      answer: ['', Validators.required],
+      answer: [''],
+      answer_hindi: [''],
       status: [''],
       question_statement: [''],
+      question_statement_hindi: [''],
       ans_desc: [''],
+      ans_desc_hindi: [''],
       daily_quizId: [''],
-      direction: ['']
+      direction: [''],
+      direction_hindi: ['']
     });
   }
 
@@ -206,10 +212,10 @@ export class AddfulllengthtestComponent implements OnInit {
   }
 
   addQuizquestion() { 
+  
     var totalqs = this.totalQuestionOption-1    
     var question_statement =  this.questionAnswer.controls[0].value.question_statement
     var answer_descriptions =  this.questionAnswer.controls[totalqs].value.ans_desc
-    var direction = this.questionAnswer.controls[0].value.direction
     
     // if (this.shouldSubmit) {
 
@@ -217,17 +223,13 @@ export class AddfulllengthtestComponent implements OnInit {
       alert("Please Add All The Answer Feilds")
     }
 
-    else if(!answer_descriptions) {
-      alert("Please Add Answer Descriptions")
-    }
-
-    else if(!question_statement) {
-      alert("Please Add Question Statement")
-    }
-
-    // else if(this.showDirectionFeild && !direction) {
-    //   alert("Please Add Question Direction")
+    // else if(!answer_descriptions) {
+    //   alert("Please Add Answer Descriptions")
     // }
+
+    // else if(!question_statement) {
+    //   alert("Please Add Question Statement")
+    // }   
 
     else if (!this.shouldSubmit) {
       alert("Please Select Correct Answer")
@@ -255,6 +257,10 @@ export class AddfulllengthtestComponent implements OnInit {
             this.questionAnswer.controls.forEach(group => group.get('status').reset())
             this.questionAnswer.controls.forEach(group => group.get('question_statement').reset())
             this.questionAnswer.controls.forEach(group => group.get('ans_desc').reset())
+
+            this.questionAnswer.controls.forEach(group => group.get('answer_hindi').reset())
+            this.questionAnswer.controls.forEach(group => group.get('question_statement_hindi').reset())
+            this.questionAnswer.controls.forEach(group => group.get('ans_desc_hindi').reset())
             this.addedQuestion = event.body
 
             alert(this.addedQuestion)
@@ -266,8 +272,7 @@ export class AddfulllengthtestComponent implements OnInit {
                 this.myStepper.next();
               });
             }
-            else {
-             
+            else {             
               var target = document.getElementById("page-header");
               target.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" })
 

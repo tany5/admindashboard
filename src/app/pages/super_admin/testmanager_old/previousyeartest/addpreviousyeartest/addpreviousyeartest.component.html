@@ -1,0 +1,279 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Full Length Quiz
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+<section class="video-course-section">
+  <div class="container-fluid">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="addQuiz">
+        <form [formGroup]="addQuiz" (ngSubmit)="addQuizDetails()">
+          <ng-template matStepLabel>Creat Test</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Course</mat-label>
+                <mat-select  formControlName="subject">
+                  <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+                    {{subject.type_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Category</mat-label>
+                <mat-select #subcategory formControlName="subcategory"
+                  (selectionChange)="getSubCategorySection(subcategory.value)">
+                  <mat-option *ngFor="let subcategory of subCategoryLists" [value]="subcategory.sub_category_id">
+                    {{subcategory.sub_category_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Sub Category</mat-label>
+                <mat-select #subsection formControlName="coursesection"
+                  (selectionChange)="getSubSection(subcategory.value, subsection.value)">
+                  <mat-option *ngFor="let coursesection of courseTypeSectionLists" [value]="coursesection.section_id">
+                    {{coursesection.section_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+           
+          </div>
+          <div class="row">
+
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Section</mat-label>
+                <mat-select formControlName="chnageable">
+                  <mat-option [value]="1">
+                    Chnageable
+                  </mat-option>
+                  <mat-option [value]="0">
+                    Non-chnageable
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Year</mat-label>
+                <input matInput formControlName="year">
+              </mat-form-field>
+            </div>
+          </div><!--row-->
+
+
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Add Test Name</mat-label>
+                <input matInput formControlName="quizname" >
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Number Of Questions</mat-label>
+                <input type="number" matInput formControlName="noofqs">
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Total Duration (in Minutes)</mat-label>
+                <input type="number" matInput formControlName="duration">
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="row">
+           
+
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Correct Marks</mat-label>
+                <input matInput formControlName="correctmarks" [(ngModel)]="correctMarks" readonly>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Negetive Marks</mat-label>
+                <input matInput formControlName="negativemarks" [(ngModel)]="negativeMarks" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-110 col-lg-4 col-sm-8 mx-auto">
+              <button type="submit" mat-raised-button class="btn-block btn-success">Add Qquiz</button>
+            </div>
+
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="addQuizQuestion">
+        <form [formGroup]="addQuizQuestion" (ngSubmit)="addQuizquestion()">
+          <ng-template matStepLabel>Add Question And Answer</ng-template>
+          <div class="row">
+            <div class="col-sm-6">
+              <h1>Total Question: {{totalQuestion}}</h1>
+            </div>
+
+            <div class="col-sm-6">
+              <h1>Remain Question: {{addedQuestion}}</h1>
+            </div>
+          </div>
+
+          <div class="row">
+            <ng-container>
+              <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select Answer Count</mat-label>
+                  <mat-select #answercount (selectionChange)="answerCount(answercount.value)">
+                    <mat-option [value]="1">
+                      1 Option
+                    </mat-option>
+                    <mat-option [value]="2">
+                      2 Option
+                    </mat-option>
+
+                    <mat-option [value]="3">
+                      3 Option
+                    </mat-option>
+
+                    <mat-option [value]="4">
+                      4 Option
+                    </mat-option>
+
+                    <mat-option [value]="5">
+                      5 Option
+                    </mat-option>
+
+                    <mat-option [value]="6">
+                      6 Option
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-12 col-md-6">               
+                  <button type="button" mat-raised-button [ngClass]="showDirectionFeild ? 'btn-danger' : 'btn-success'" id="showDirection" (click)="showDirection()">{{ showDirectionFeild == true ? 'Remove Direction' : 'Add Direction' }}</button>                 
+              </div>
+            </ng-container>
+          </div>
+
+          <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+
+            <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+
+              <div [formGroupName]="i">
+
+                <div class="row" *ngIf="showDirectionFeild">
+                  <div class="col-12">
+                    <h1 *ngIf="i == 0">Question Direction</h1>
+                    <angular-editor *ngIf="i == 0" formControlName="direction" [config]="editorConfig"
+                      required>
+                    </angular-editor>                   
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-12">
+                    <h1 *ngIf="i == 0">Question</h1>
+                    <angular-editor *ngIf="i == 0" formControlName="question_statement" [config]="editorConfig"
+                      required>
+                    </angular-editor>
+
+                    <input type="hidden" *ngIf="i == 0" formControlName="daily_quizId" [(ngModel)]="dailyQuizId">
+                  </div>
+                </div>
+
+                
+
+
+                <ng-container *ngIf="showAnswersLists">
+                  <div class="row">
+                    <div class="col-12">
+                      <h1 class="text-center">Answer Options {{i+1}}</h1>
+                    </div>
+                    <div class="col-2 col-md-1">
+
+                      <div class="control-group">
+                        <label class="text-center">Option</label>
+                        <div class="controls">
+                          <div class="option_box">
+                            <span>{{i+1}}</span>
+                            <input (click)="selectCity(i)" type="radio" class="span12 single_radio" id="city{{i}}"
+                              name="status" formControlName="status" [value]="selValue" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-10">
+                      <angular-editor formControlName="answer" [config]="editorConfig" required></angular-editor>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row">
+                    <div class="col-12">
+                      <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description</h1>
+                      <angular-editor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
+                        [config]="editorConfig" required></angular-editor>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+            </ng-container>
+          </section>
+          <button type="submit" mat-raised-button color="primary">Submit Question answer</button>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div class="vertical-center">
+          <div class="container">
+            <div class="row">
+              <img src="assets/images/dont.png" class="mx-auto img-fluid">
+              <div class="col-12 text-center">
+                <p class="text-center">You are now done.</p>
+                <a mat-raised-button color="primary" class="mx-auto" (click)="goBack()">Go Back</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</section>

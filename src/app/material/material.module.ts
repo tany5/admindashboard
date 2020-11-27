@@ -25,6 +25,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatBadgeModule} from '@angular/material/badge';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -53,7 +54,8 @@ const MaterialComponents = [
   MatAutocompleteModule,
   MatTableModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatBadgeModule
 ]
 @NgModule({
 

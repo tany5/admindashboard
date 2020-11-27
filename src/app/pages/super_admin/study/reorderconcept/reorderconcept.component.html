@@ -1,0 +1,57 @@
+<div class="overlay" *ngIf="showLoader">
+  <div class="center">
+    <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+    </mat-progress-spinner>
+    <div class="message">{{progress}}%</div>
+  </div>
+</div>
+
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+    background-size: cover;
+    position: relative;
+    border-radius: 0;
+    color: #fff;" id="page-header">
+  <div class="page-block">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Avision Admin Panel</p>
+          </div>
+        </div>
+        <div class="col-md-4 text-right">
+          <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Course
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="video-course-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-10">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Subject</mat-label>
+          <mat-select #subject required (selectionChange)="onSubjectSelect(subject.value)">
+            <mat-option *ngFor="let subject of subjectLists" [value]="subject.type_id">
+              {{subject.type_name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <button mat-raised-button class="btn-success" (click)="submit_reorder()">Submit Reorder</button>
+      </div>
+    </div>
+    <div class="row" style="max-height: 60vh; overflow-y: scroll;">
+      <div class="col-10">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">         
+          <div class="example-box" *ngFor="let chapter of chapterLists" cdkDrag>{{chapter.chapter_name}} <span matBadge="{{chapter.new_order}}" matBadgeOverlap="false" class="order_count"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

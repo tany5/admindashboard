@@ -1,8 +1,8 @@
 <mat-toolbar>
     <span class="example-spacer"></span>
     <button mat-raised-button class="user_btn" [matMenuTriggerFor]="menu2">
-    <mat-icon>notifications</mat-icon>
-  </button>
+        <mat-icon>notifications</mat-icon>
+    </button>
 
     <mat-menu #menu2="matMenu" xPosition="before" class="notifications-dropdown">
         <div class="container-fluid">
@@ -28,21 +28,21 @@
     </mat-menu>
 
     <button mat-raised-button class="user_btn" [matMenuTriggerFor]="menu">
-    Tanmay Dey
-    <mat-icon>expand_more</mat-icon>
-  </button>
+        Tanmay Dey
+        <mat-icon>expand_more</mat-icon>
+    </button>
 
     <mat-menu #menu="matMenu" xPosition="before">
 
         <button mat-menu-item>
-      <mat-icon>account_circle</mat-icon>
-      Profile
-    </button>
+            <mat-icon>account_circle</mat-icon>
+            Profile
+        </button>
 
-        <button mat-menu-item>
-      <mat-icon>exit_to_app</mat-icon>
-      Sign out
-    </button>
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            Sign out
+        </button>
 
     </mat-menu>
 </mat-toolbar>

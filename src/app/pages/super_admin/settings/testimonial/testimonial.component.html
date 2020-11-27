@@ -1,0 +1,201 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Testimonial
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">ADD TESTIMONIAL</h1>
+            </div>
+        </div>
+        <div class="row">
+            <form [formGroup]="addTestimonial" (ngSubmit)="submitTestimonial()">
+                <div class="row">
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Course</mat-label>
+                            <mat-select #course formControlName="testimonialcourse"
+                                (selectionChange)="getProduct(course.value)">
+                                <mat-option value="0">
+                                    -- Home Page Testimonial --
+                                </mat-option>
+                                <mat-option *ngFor="let course of courseLists" [value]="course.courses_id">
+                                    {{course.courses_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Product</mat-label>
+                           
+                            <mat-select  formControlName="testimonialproduct">
+                                <mat-option value="0">
+                                    -- No Product --
+                                </mat-option>
+                                <mat-option *ngFor="let product of productLists" [value]="product.product_id">
+                                    {{product.product_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Testimonial Rating</mat-label>
+                            <input type="number" matInput formControlName="rating">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-11 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>User Name</mat-label>
+                            <input matInput formControlName="user_name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Add Testimonial</h2>
+                                <angular-editor formControlName="testimonial" [config]="editorConfig" required>
+                                </angular-editor>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <h2>Add User Image</h2>
+                        <img [src]="src" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFileBackgroud($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="student_img" />
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Add Testimonial</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <mat-form-field>
+                    <mat-label>Search</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="table table-striped table-bordered">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row index as i"> {{i+1}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="content">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> content </th>
+                    <td mat-cell *matCellDef="let row" [innerHTML]="row.content"> </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="courses_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Course Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.courses_name}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="product_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.product_name}} </td>
+                </ng-container>
+
+                 <!-- Progress Column -->
+                 <ng-container matColumnDef="rating">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> rating </th>
+                    <td mat-cell *matCellDef="let row"> {{row.rating}} </td>
+                </ng-container>
+
+                  <!-- Progress Column -->
+                  <ng-container matColumnDef="user_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.user_name}} </td>
+                </ng-container>
+
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Banner Image </th>
+                    <td mat-cell *matCellDef="let row">
+                        <img src="http://localhost/avisionEstore/{{row.image}}"
+                            style="max-height: 150px; max-width: 200px;">
+                    </td>
+                </ng-container>
+
+
+
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td mat-cell *matCellDef="let row" [style.color]="row.color">
+                        <button mat-raised-button color="primary" (click)="edit_quiz(row.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-raised-button color="warn"
+                            (click)="delete_quiz(row.id, row.user_name)">
+                            <mat-icon>clear</mat-icon>
+                        </button>
+
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</section>

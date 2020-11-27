@@ -1,0 +1,270 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Question
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h1 class="text-center">ADD QUESTION</h1>
+            </div>
+            <form [formGroup]="addQuestion">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Exam Type</mat-label>
+                            <mat-select formControlName="examtype">
+                                <mat-option value="mains">
+                                    Mains
+                                </mat-option>
+
+                                <mat-option value="preli">
+                                    Preli
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Subject</mat-label>
+                            <mat-select #subject formControlName="subject" (selectionChange)="getChapter(subject.value)"
+                                [(ngModel)]="type_id">
+                                <mat-option [value]="subject.type_id" *ngFor="let subject of subjectList">
+                                    {{subject.type_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <input type="hidden" formControlName="question_id" [(ngModel)]="questionId" />
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Chapter</mat-label>
+                            <mat-select formControlName="chapter" [(ngModel)]="chapter_id">
+                                <mat-option [value]="chapter.chapter_id" *ngFor="let chapter of chapterLists">
+                                    {{chapter.chapter_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Course</mat-label>
+                            <mat-select formControlName="course" [(ngModel)]="sub_category_id">
+                                <mat-option [value]="course.sub_category_id" *ngFor="let course of courseLists">
+                                    {{course.sub_category_name}}
+                                </mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Difficultie Level</mat-label>
+                            <mat-select formControlName="difficultie" [(ngModel)]="diff_level">
+                                <mat-option value="1">
+                                    Easy
+                                </mat-option>
+
+                                <mat-option value="2">
+                                    Moderate
+                                </mat-option>
+
+                                <mat-option value="3">
+                                    Difficult
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <!-- <mat-form-field appearance="outline">
+                            <mat-label>Select Answer Count</mat-label>
+                            <mat-select #answercount (selectionChange)="answerCount(answercount.value)">
+                                <mat-option [value]="1">
+                                    1 Option
+                                </mat-option>
+                                <mat-option [value]="2">
+                                    2 Option
+                                </mat-option>
+
+                                <mat-option [value]="3">
+                                    3 Option
+                                </mat-option>
+
+                                <mat-option [value]="4">
+                                    4 Option
+                                </mat-option>
+
+                                <mat-option [value]="5">
+                                    5 Option
+                                </mat-option>
+
+                                <mat-option [value]="6">
+                                    6 Option
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<section class="video-course-section">
+    <div class="container-fluid">
+
+        <form [formGroup]="addQuizQuestion" (ngSubmit)="addQuizquestion()">
+            <ng-template matStepLabel>Add Question And Answer</ng-template>
+            <section class="container-fluid border mb-4 p-3" formArrayName="questionAnswer">
+                <ng-container *ngFor="let address of questionAnswerControls; let i = index;">
+
+                    <div [formGroupName]="i">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <button type="button" *ngIf="i==0" mat-raised-button class="btn-success float-right"
+                                    (click)="addNewRow()">Add new Row</button>
+                            </div>
+
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">Question Direction English</h1>
+                                <!-- <ckeditor *ngIf="i == 0" formControlName="direction" [editor]="Editor" >
+                                </ckeditor> -->
+                                <ckeditor [editor]="Editor" *ngIf="i == 0" formControlName="direction"
+                                    [(ngModel)]="question_desc"></ckeditor>
+
+                            </div>
+
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">Question Direction Hindi</h1>
+                                <ckeditor *ngIf="i == 0" formControlName="direction_hindi" [editor]="Editor"
+                                    [(ngModel)]="question_desc_hindi">
+                                </ckeditor>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0"> English Question</h1>
+                                <ckeditor *ngIf="i == 0" formControlName="question_statement" [editor]="Editor"
+                                    [(ngModel)]="question_text">
+                                </ckeditor>
+                                <br>
+                            </div>
+                            <div class="col-6">
+                                <h1 *ngIf="i == 0">Hindi Question </h1>
+                                <ckeditor *ngIf="i == 0" formControlName="question_statement_hindi" [editor]="Editor"
+                                    [(ngModel)]="question_text_hindi">
+                                </ckeditor>
+                                <br>
+                            </div>
+
+                        </div>
+
+
+                        <ng-container *ngIf="showAnswersLists">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="row no-gutters">
+                                        <div class="col-12">
+                                            <h1 class="text-center">English Answer Options {{i+1}}</h1>
+                                        </div>
+                                        <div class="col-2 col-md-2 col-xl-1">
+
+                                            <div class="control-group">
+                                                <label class="text-center">Option</label>
+                                                <div class="controls">
+                                                    <div class="option_box">
+                                                        <span>{{i+1}}</span>
+                                                        <input type="hidden" formControlName="status" #status
+                                                            [(ngModel)]="answers[i]['answer_status']" />
+                                                        <ng-container *ngIf="status.value == '1'">
+                                                            <input (click)="selectCity(i)" type="radio"
+                                                                class="span12 single_radio" id="city{{i}}" name="status"
+                                                                formControlName="status" [value]="status.value"
+                                                                checked="checked" />
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="status.value == '0' || !status.value">
+                                                            <input (click)="selectCity(i)" type="radio"
+                                                                class="span12 single_radio" id="city{{i}}" name="status"
+                                                                formControlName="status" [value]="selValue" />
+                                                        </ng-container>
+
+                                                        <!-- <ng-container *ngIf="!status.value ">
+                                                            <input type="text" #status [value]="selValue">
+                                                            <input (click)="selectCity(i)" type="radio"
+                                                                class="span12 single_radio" id="city{{i}}" name="status"
+                                                                formControlName="status" [value]="status.value" />
+                                                        </ng-container> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-10 col-10 col-xl-11">
+                                            <ckeditor formControlName="answer" [editor]="Editor"
+                                                [(ngModel)]="answers[i]['answer_text']"></ckeditor>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--row-->
+                                <div class="col-12 col-md-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h1 class="text-center">Hindi Answer Options {{i+1}}</h1>
+                                        </div>
+
+                                        <div class="col-md-12 col-12">
+                                            <ckeditor formControlName="answer_hindi" [editor]="Editor"
+                                                [(ngModel)]="answers[i]['answer_text_hindi']">
+                                            </ckeditor>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <br>
+                                <div class="col-6">
+                                    <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description English</h1>
+                                    <ckeditor *ngIf="i == questionAnswerControls.length-1" formControlName="ans_desc"
+                                        [editor]="Editor" [(ngModel)]="solution"></ckeditor>
+                                </div>
+
+                                <div class="col-6">
+                                    <h1 *ngIf="i == questionAnswerControls.length-1">Answer Description Hindi</h1>
+                                    <ckeditor *ngIf="i == questionAnswerControls.length-1"
+                                        formControlName="ans_desc_hindi" [editor]="Editor" [(ngModel)]="solution_hindi">
+                                    </ckeditor>
+                                </div>
+                            </div>
+                            <br>
+                        </ng-container>
+                    </div>
+
+                </ng-container>
+            </section>
+            <button type="submit" mat-raised-button color="primary">Submit Question answer</button>
+        </form>
+    </div>
+</section>

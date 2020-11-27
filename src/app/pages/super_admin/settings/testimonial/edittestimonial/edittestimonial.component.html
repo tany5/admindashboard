@@ -1,0 +1,109 @@
+<section class="page-header" id="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Edit Testimonial
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+<section class="video-course-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">EDIT TESTIMONIAL</h1>
+            </div>
+        </div>
+        <div class="row">
+            <form [formGroup]="addTestimonial" (ngSubmit)="submitTestimonial()">
+                <div class="row">
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Course</mat-label>
+                            <mat-select #course formControlName="testimonialcourse"
+                                (selectionChange)="getProduct(course.value)" [(ngModel)]="course_id">
+                                <mat-option value="0">
+                                    -- Home Page Testimonial --
+                                </mat-option>
+                                <mat-option *ngFor="let course of courseLists" [value]="course.courses_id">
+                                    {{course.courses_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-10 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Product</mat-label>
+                            <mat-select formControlName="testimonialproduct" [(ngModel)]="product_id">
+                                <mat-option value="0">
+                                    -- No Product --
+                                </mat-option>
+                                <mat-option *ngFor="let product of productLists" [value]="product.product_id">
+                                    {{product.product_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <input type="hidden" formControlName="testimonial_id" [(ngModel)]="testimonial_id">
+                    </div>
+
+                    <div class="col-12 col-md-4 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Testimonial Rating</mat-label>
+                            <input type="number" matInput formControlName="rating" [(ngModel)]="rating">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-11 mx-auto">
+                        <mat-form-field appearance="outline">
+                            <mat-label>User Name</mat-label>
+                            <input matInput formControlName="user_name" [(ngModel)]="user_name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Add Testimonial</h2>
+                                <angular-editor formControlName="testimonial" [config]="editorConfig" required [(ngModel)]="content">                                    
+                                </angular-editor>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <h2>Add User Image</h2>
+                        <img [src]="src" class="img-fluid" />
+                        <input class="btn btn-danger btn-block" type="file" (change)="onSelectFileBackgroud($event)"
+                            accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="student_img" />
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12 col-md-6 mx-auto">
+                        <button type="submit" mat-raised-button class="btn-success btn-block">Edit Testimonial</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,207 @@
+<section class="page-header" style="background-image: url(assets/images/breadcrumb-bg.jpg);
+background-size: cover;
+position: relative;
+border-radius: 0;
+color: #fff;" id="page-header">
+    <div class="page-block">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="page-title">
+                        <h5 class="m-b-10">Dashboard</h5>
+                        <p class="m-b-0">Welcome to Avision Admin Panel</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a [routerLink]="['/superadmin/dashboard']" style="color:#fff">Home</a> / Add Full Length Quiz
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="center">
+        <mat-progress-spinner diameter=100 mode="indeterminate" color="primary">
+        </mat-progress-spinner>
+        <div class="message">{{progress}}%</div>
+    </div>
+</div>
+
+
+<section class="video-course-section" *ngIf="showProduct">
+    <div class="container-fluid">
+        <mat-horizontal-stepper [linear]="isLinear" #stepper style="min-height: 40vh;">
+            <mat-step [stepControl]="addProduct">
+                <form [formGroup]="addProduct" (ngSubmit)="addproductDetails()">
+                    <ng-template matStepLabel>Creat Test</ng-template>
+
+                    <input type="hidden" formControlName="product_id" [(ngModel)]="productId" >
+
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Product Name</mat-label>
+                                <input matInput formControlName="productname" [(ngModel)]="product_name">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Product Code</mat-label>
+                                <input matInput formControlName="productcode" [(ngModel)]="product_code">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Course</mat-label>
+                                <mat-select formControlName="subject" [(ngModel)]="sub_cat_id">
+                                    <mat-option *ngFor="let subject of subjectLists" [value]="subject.sub_category_id">
+                                        {{subject.sub_category_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-label>Product Description</mat-label>
+                            <angular-editor formControlName="product_desc" [config]="editorConfig" required [(ngModel)]="product_desc">
+                            </angular-editor>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <h1>Product Image</h1>
+                            <img [src]="src" class="img-fluid" />
+                            <input class="btn btn-danger btn-block" type="file" (change)="onSelectFile($event)"
+                                accept=".png, .jpg, .jpeg" value="Add Product Image" formArrayName="product_img" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-10 col-md-6 mt-5 mx-auto">
+                            <button type="submit" mat-raised-button class="btn-block btn-success">Submit Product
+                                Details</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="addProductPrice">
+                <form [formGroup]="addProductPrice" (ngSubmit)="addproductPriceDetails()">
+                    <ng-template matStepLabel>Price Details</ng-template>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Product Regular Price</mat-label>
+                                <input type="number" matInput formControlName="regularprice" required [(ngModel)]="product_price">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Product Offer Price</mat-label>
+                                <input type="number" matInput formControlName="offerprice" required [(ngModel)]="product_offer_price">
+                            </mat-form-field>
+
+                            <input type="hidden" formControlName="product_id" [(ngModel)]="productId" >
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-10 col-md-6 mt-3 mx-auto">
+                            <button type="submit" mat-raised-button class="btn-block btn-success">Submit Product
+                                Price Details</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="addProductQuiz">
+                <form [formGroup]="addProductQuiz" (ngSubmit)="addproductQuizDetails()">
+                    <ng-template matStepLabel>Add Quiz</ng-template>
+                    <div class="row">
+                        <div class="col-10 mx-auto">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select Quiz</mat-label>
+                                <mat-select formControlName="quizname" multiple [(ngModel)]="assingnedQuiz">
+                                    <mat-option *ngFor="let subject of quizLists" [value]="subject.quiz_id">
+                                        {{subject.quiz_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <input type="hidden" formControlName="product_id" [(ngModel)]="productId">
+                    </div>
+                    <div class="row">
+                        <div class="col-10 col-md-6 mt-3 mx-auto">
+                            <button type="submit" mat-raised-button class="btn-block btn-success">Submit Quiz
+                                Lists</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="submitPublishDetails">
+                <form [formGroup]="submitPublishDetails">
+                    <ng-template matStepLabel>Publish</ng-template>
+                    <div class="row">
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="startdate" [(ngModel)]="startdate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-6">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="picker2" formControlName="enddate" [(ngModel)]="enddate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <input type="hidden" formControlName="product_id" [(ngModel)]="productId">
+
+                    <div class="row">
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" mat-raised-button class="btn-success btn-block"
+                                        (click)="submit_pubish(1)">Publish</button>
+                                </div>
+
+                                <div class="col-6">
+                                    <button type="submit" mat-raised-button class="btn-danger btn-block"
+                                        (click)="submit_pubish(0)">Save For Review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <div class="vertical-center">
+                    <div class="container">
+                        <div class="row">
+                            <img src="assets/images/dont.png" class="mx-auto img-fluid">
+                            <div class="col-12 text-center">
+                                <p class="text-center">You are now done.</p>
+                                <a mat-raised-button color="primary" class="mx-auto" (click)="goBack()">Go Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</section>
